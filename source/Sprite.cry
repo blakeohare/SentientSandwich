@@ -15,6 +15,7 @@ class Sprite {
 		}
 		this.ground = null;
 		this.vy = 0;
+		this.dx = 0;
 	}
 	
 	function update(scene, grid) {
@@ -59,6 +60,47 @@ class Sprite {
 				}
 			}
 		}
+		
+		// Phase 2: apply x vector
+		
+		if (this.dx != 0) {
+			new_x = this.x + this.dx;
+			old_col = $floor(this.x);
+			new_col = $floor(new_x);
+			if (old_col == new_col) {
+				this.x = new_x;
+			} else {
+				bottom_y = $floor(this.y - EPSILON);
+				top_y = $floor(this.y - effective_height);
+				blocked = false;
+				for (y = top_y; y <= bottom_y; ++y) {
+					tile = grid[new_col][y];
+					if (tile.blocking) {
+						blocked = true;
+					}
+				}
+				
+				if (blocked) {
+					if (this.dx > 0) {
+						this.x = new_col - EPSILON;
+					} else {
+						this.x = new_col + 1 + EPSILON;
+					}
+				} else {
+					this.x = new_x;
+					if (this.ground != null) {
+						new_ground = grid[new_col][$floor(this.y)];
+						if (new_ground.blocking) {
+							this.ground = new_ground;
+						} else {
+							this.ground = null;
+						}
+					}
+				}
+			}
+			this.dx = 0;	
+		}
+		
 	}
 	
 	function render(rc, offset_x, offset_y) {
