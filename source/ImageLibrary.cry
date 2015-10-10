@@ -6,7 +6,10 @@ class ImageLibrary {
 	function get(path) {
 		img = this.images.get(path, null);
 		if (img == null) {
-			
+			rpath = 'images/' + path;
+			$gfx_image_load_from_resource('t', rpath);
+			img = $gfx_image_get('t');
+			this.images[path] = img;
 		}
 		return img;
 	}

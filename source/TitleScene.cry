@@ -1,13 +1,24 @@
 class TitleScene : AbstractScene {
 	constructor() : base() {
 		this.next = null;
+		this.counter = 0;
 	}
 	
 	function update(events, pressed_keys) {
-		
+		this.counter++;
 	}
 	
 	function render(rc) {
+		title = IMAGES.get('title.png');
+		$gfx_blit_image(title, 0, 0);
 		
+		left = 13;
+		top = 166;
+		width = 150;
+		height = 100;
+		
+		if ((rc / 8) % 2 == 0) {
+			$gfx_draw_rectangle(left, top, width, height, 34, 177, 78, 255);
+		}
 	}
 }

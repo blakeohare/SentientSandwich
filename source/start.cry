@@ -1,5 +1,10 @@
+FPS = 30;
+GAME_WIDTH = 640;
+GAME_HEIGHT = 480;
+
 import 'AbstractScene.cry';
 
+import 'FadeScene.cry';
 import 'ImageLibrary.cry';
 import 'LoadingScene.cry';
 import 'TitleScene.cry';
@@ -7,9 +12,9 @@ import 'Util.cry';
 
 
 function main() {
-	$game_initialize(30);
+	$game_initialize(FPS);
 	
-	$game_initialize_screen(640, 480);
+	$game_initialize_screen(GAME_WIDTH, GAME_HEIGHT);
 	
 	$game_set_title('Sentient Sandwich');
 	
