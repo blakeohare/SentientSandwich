@@ -1,0 +1,13 @@
+class PlayScene : AbstractScene {
+	constructor() : base() {
+		
+	}
+	
+	function update(events, pressed_keys) {
+	
+	}
+	
+	function render(rc) {
+	
+	}
+}

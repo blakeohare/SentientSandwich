@@ -6,6 +6,12 @@ class TitleScene : AbstractScene {
 	
 	function update(events, pressed_keys) {
 		this.counter++;
+		
+		for (event : events) {
+			if (event.key == 'space') {
+				this.next = new FadeScene(this, new PlayScene());
+			}
+		}
 	}
 	
 	function render(rc) {

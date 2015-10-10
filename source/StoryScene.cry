@@ -1,0 +1,15 @@
+// TODO: this (on Sunday)
+
+class StoryScene : AbstractScene {
+	constructor() : base() {
+		
+	}
+	
+	function update(events, pressed_keys) {
+	
+	}
+	
+	function render(rc) {
+	
+	}
+}
