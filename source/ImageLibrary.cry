@@ -1,16 +1,46 @@
 class ImageLibrary {
 	constructor() {
 		this.images = {};
+		this.flipped = {};
+		this.by_scale = {};
+		this.flipped_by_scale = {};
 	}
 	
-	function get(path) {
-		img = this.images.get(path, null);
-		if (img == null) {
-			rpath = 'images/' + path;
-			$gfx_image_load_from_resource('t', rpath);
-			img = $gfx_image_get('t');
-			this.images[path] = img;
+	function get_scaled(path, scale, flipped = false) {
+		scaleint = $floor(scale * 100);
+		lookup = flipped ? this.flipped_by_scale : this.by_scale;
+		images = lookup.get(scaleint, null);
+		if (images == null) {
+			images = {};
+			lookup[scaleint] = images;
 		}
+		
+		img = images.get(path, null);
+		if (img == null) {
+			img = this.get(path, flipped);
+			img = $gfx_image_scale(img, $floor(img.width * scale), $floor(img.height * scale));
+			images[path] = img;
+		}
+		return img;
+	}
+	
+	function get(path, flipped = false) {
+		
+		lookup = flipped ? this.flipped : this.images;
+		img = lookup.get(path, null);
+		if (img == null) {
+			if (flipped) {
+				img = this.get(path, false);
+				img = $gfx_flip_image(img, true, false);
+				this.flipped[path] = img;
+			} else {
+				rpath = 'images/' + path;
+				$gfx_image_load_from_resource('t', rpath);
+				img = $gfx_image_get('t');
+				this.images[path] = img;
+			}
+		}
+
 		return img;
 	}
 }
