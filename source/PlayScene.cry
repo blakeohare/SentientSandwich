@@ -57,8 +57,40 @@ class PlayScene : AbstractScene {
 		height = this.map.height;
 		width = this.map.width;
 		grid = this.map.grid;
-		for (y = 0; y < height; ++y) {
-			for (x = 0; x < width; ++x) {
+		
+		left = 0;
+		top = 0;
+		bottom = height - 1;
+		right = width - 1;
+		
+		left_pixel = left * 40 - offset_x;
+		right_pixel = right * 40 - offset_x;
+		top_pixel = top * 40 - offset_y;
+		bottom_pixel = bottom * 40 - offset_y;
+		
+		// THis is all broken. 
+		crop_left = $floor(left_pixel / 40) + 1;//- 1;
+		crop_right = $floor((right_pixel - GAME_WIDTH) / 40) - 1;
+		crop_top = $floor(top_pixel / 40) - 1;
+		crop_bottom = $floor((bottom_pixel - GAME_HEIGHT) / 40) - 1;
+		if (crop_left < 0) crop_left = 0;
+		if (crop_right < 0) crop_right = 0;
+		if (crop_top < 0) crop_top = 0;
+		if (crop_bottom < 0) crop_bottom = 0;
+		// so mark everything as 0
+		// TODO: fix it
+		crop_left = 0;
+		crop_top = 0;
+		crop_right = 0;
+		crop_bottom = 0;
+		
+		left += crop_left;
+		right -= crop_right;
+		top += crop_top;
+		bottom -= crop_bottom;
+		
+		for (y = top; y <= bottom; ++y) {
+			for (x = left; x <= right; ++x) {
 				tt = grid[x][y].template;
 				if (tt.last_valid != rc) {
 					img = tt.get_image(rc);
