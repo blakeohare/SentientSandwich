@@ -1,0 +1,47 @@
+TILE_DATA = {
+	// tile key: [ID name, nullable int of image count]
+	'x': ['block', null],
+	' ': ['background', null],
+};
+
+class TileTemplate {
+	constructor(key) {
+		data = TILE_DATA[key];
+		this.id = data[0];
+		frames = data[1];
+		if (frames == null) {
+			this.images = [IMAGES.get('tiles/' + this.id + '.png')];
+		} else {
+			this.images = [];
+			for (i = 1; i <= frames; ++i) {
+				// 4 images per frame. Could divide render counter by 4, or just do this and drop a VM cycle.
+				this.images.concat([IMAGES.get('tiles/' + this.id + i + '.png')] * 4);
+			}
+		}
+		this.last_valid = -1;
+		this.latest_image = null;
+		this.images_length = this.images.length;
+	}
+	
+	function get_image(rc) {
+		img = this.images[rc % this.images_length];
+		this.latest_image = img;
+		this.last_valid = rc;
+		return img;
+	}
+}
+
+TILE_STORE = {};
+
+class Tile {
+	constructor(id, x, y) {
+		this.id = id;
+		this.template = TILE_STORE.get(id, null);
+		if (this.template == null) {
+			this.template = new TileTemplate(id);
+			TILE_STORE[id] = this.template;
+		}
+		this.x = x;
+		this.y = y;
+	}
+}

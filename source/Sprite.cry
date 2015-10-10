@@ -1,0 +1,11 @@
+class Sprite {
+	constructor(type, x, y) {
+		this.x = x + 0.0;
+		this.y = y + 0.0;
+		this.type = type;
+	}
+	
+	function update(scene) {
+		// TODO: this
+	}
+}

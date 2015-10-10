@@ -1,13 +1,37 @@
 class PlayScene : AbstractScene {
-	constructor() : base() {
-		
+	constructor(id) : base() {
+		this.id = id;
+		this.map = new Map(id);
+		start = this.map.starting_position;
+		this.player = new Sprite('sandwich', start[0], start[1]);
+		this.player.size = 30.0;
+		this.sprites = [this.player];
 	}
 	
 	function update(events, pressed_keys) {
-	
+		for (sprite : this.sprites) {
+			sprite.update(this);
+		}
 	}
 	
 	function render(rc) {
-	
+		cam_x = $floor(this.player.x * 40);
+		cam_y = $floor(this.player.y * 40);
+		
+		height = this.map.height;
+		width = this.map.width;
+		grid = this.map.grid;
+		for (y = 0; y < height; ++y) {
+			for (x = 0; x < width; ++x) {
+				tt = grid[x][y].template;
+				if (tt.last_valid != rc) {
+					img = tt.get_image(rc);
+				} else {
+					img = tt.latest_image;
+				}
+				
+				$gfx_blit_image(img, x * 40, y * 40);
+			}
+		}
 	}
 }

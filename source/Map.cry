@@ -1,0 +1,37 @@
+TILE_ID_TO_SPRITE_TYPE = {
+	'o': 'olive'
+};
+
+class Map {
+	constructor(path) {
+		contents = $resource_read_text('levels/' + path + '.txt');
+		rows = contents.replace('\r\n', '\n').replace('\r', '\n').split('\n');
+		height = rows.length;
+		width = rows[0].length;
+		this.width = width;
+		this.height = height;
+		this.starting_position = [0, 0];
+		this.sprites = [];
+		grid = make_grid(width, height);
+		for (y = 0; y < height; ++y) {
+			for (x = 0; x < width; ++x) {
+				id = rows[y][x];
+				switch (id) {
+					case '@':
+						id = ' ';
+						this.starting_position = [x, y];
+						break;
+					// TODO: add other sprites here as they are invented
+					case 'o':
+						this.sprites.add([id, x, y]);
+						id = ' ';
+						break;
+					default:
+						break;
+				}
+				grid[x][y] = new Tile(id, x, y);
+			}
+		}
+		this.grid = grid;
+	}
+}

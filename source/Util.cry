@@ -1,1 +1,7 @@
-// nothing here yet.
+function make_grid(width, height) {
+	grid = [];
+	while (width-- > 0) {
+		grid.add([null] * height);
+	}
+	return grid;
+}

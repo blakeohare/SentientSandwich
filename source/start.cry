@@ -7,8 +7,11 @@ import 'AbstractScene.cry';
 import 'FadeScene.cry';
 import 'ImageLibrary.cry';
 import 'LoadingScene.cry';
+import 'Map.cry';
 import 'PlayScene.cry';
+import 'Sprite.cry';
 import 'StoryScene.cry';
+import 'Tile.cry';
 import 'TitleScene.cry';
 import 'Util.cry';
 
