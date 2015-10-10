@@ -1,7 +1,12 @@
 TILE_DATA = {
-	// tile key: [ID name, nullable int of image count]
-	'x': ['block', null],
-	' ': ['background', null],
+	/* tile key: [
+		ID name,
+		nullable int of image count,
+		is blocking
+		]
+	*/
+	'x': ['block', null, true],
+	' ': ['background', null, false],
 };
 
 class TileTemplate {
@@ -9,6 +14,7 @@ class TileTemplate {
 		data = TILE_DATA[key];
 		this.id = data[0];
 		frames = data[1];
+		this.blocking = data[2];
 		if (frames == null) {
 			this.images = [IMAGES.get('tiles/' + this.id + '.png')];
 		} else {
@@ -43,5 +49,6 @@ class Tile {
 		}
 		this.x = x;
 		this.y = y;
+		this.blocking = this.template.blocking;
 	}
 }

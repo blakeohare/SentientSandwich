@@ -2,6 +2,8 @@ FPS = 30;
 GAME_WIDTH = 640;
 GAME_HEIGHT = 480;
 
+EPSILON = 0.00001;
+
 import 'AbstractScene.cry';
 
 import 'FadeScene.cry';

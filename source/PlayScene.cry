@@ -17,8 +17,28 @@ class PlayScene : AbstractScene {
 	}
 	
 	function update(events, pressed_keys) {
+		for (event : events) {
+			switch (event.key) {
+				case 'space':
+					if (event.down) {
+						if (this.player.ground != null) {
+							this.player.ground = null;
+							this.player.vy = -.9;
+						}
+					} else {
+						if (this.player.ground == null && this.player.vy < 0) {
+							this.player.vy = 0;
+						}
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		
+		grid = this.map.grid;
 		for (sprite : this.sprites) {
-			sprite.update(this);
+			sprite.update(this, grid);
 		}
 	}
 	
