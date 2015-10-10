@@ -1,0 +1,15 @@
+class ImageLibrary {
+	constructor() {
+		this.images = {};
+	}
+	
+	function get(path) {
+		img = this.images.get(path, null);
+		if (img == null) {
+			
+		}
+		return img;
+	}
+}
+
+IMAGES = new ImageLibrary();

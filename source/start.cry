@@ -1,0 +1,49 @@
+import 'AbstractScene.cry';
+
+import 'ImageLibrary.cry';
+import 'LoadingScene.cry';
+import 'TitleScene.cry';
+import 'Util.cry';
+
+
+function main() {
+	$game_initialize(30);
+	
+	$game_initialize_screen(640, 480);
+	
+	$game_set_title('Sentient Sandwich');
+	
+	pressed_keys = {};
+	events = [];
+	
+	active_scene = new LoadingScene();
+	counter = 0;
+	
+	while (true) {
+		
+		events.clear();
+		for (ev : $game_pump_events()) {
+			if (ev.is_quit) return;
+			
+			if (ev.is_key) {
+				pressed_keys[ev.key] = ev.down;
+				events.add(ev);
+			}
+		}
+		
+		active_scene.update(events, pressed_keys);
+		active_scene.render(counter);
+		
+		if (active_scene.next != null) {
+			old = active_scene;
+			active_scene = old.next;
+			old.next = null;
+		}
+		
+		counter++;
+		
+		$game_clock_tick();
+	}
+}
+
+main();

@@ -1,0 +1,30 @@
+<build>
+	<projectname>SentientSandwich</projectname>
+	<source>source/</source>
+	<output>output/%TARGET_NAME%</output>
+	
+	<!-- Sprite sheets -->
+	<spritesheets>
+		<sheet id="all">
+			<prefix>images/</prefix>
+		</sheet>
+	</spritesheets>
+	
+	<!-- Targets -->
+	<target name="js_local">
+		<platform>js</platform>
+	</target>
+	
+	<target name="js_remote">
+		<platform>js</platform>
+		<jsfileprefix>/demos/sentientsandwich</jsfileprefix>
+	</target>
+	
+	<target name="windows">
+		<platform>csopengl</platform>
+	</target>
+	
+	<target name="python">
+		<platform>python</platform>
+	</target>
+</build>

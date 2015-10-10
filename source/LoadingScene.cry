@@ -1,0 +1,13 @@
+class LoadingScene : AbstractScene {
+	constructor() : base() {
+		this.next = null;
+	}
+	
+	function update(events, pressed_keys) {
+		
+	}
+	
+	function render(rc) {
+		
+	}
+}
