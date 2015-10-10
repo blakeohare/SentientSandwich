@@ -2,10 +2,18 @@ class PlayScene : AbstractScene {
 	constructor(id) : base() {
 		this.id = id;
 		this.map = new Map(id);
-		start = this.map.starting_position;
-		this.player = new Sprite('sandwich', start[0], start[1]);
-		this.player.size = 30.0;
-		this.sprites = [this.player];
+		this.player = null;
+		this.sprites = [];
+		for (sprite_data : this.map.sprites) {
+			type = sprite_data[0];
+			x = sprite_data[1] + .5;
+			y = sprite_data[2] + 1;
+			sprite = new Sprite(type, x, y);
+			if (type == 'player') {
+				this.player = sprite;
+			}
+			this.sprites.add(sprite);
+		}
 	}
 	
 	function update(events, pressed_keys) {
@@ -15,9 +23,10 @@ class PlayScene : AbstractScene {
 	}
 	
 	function render(rc) {
-		cam_x = $floor(this.player.x * 40);
-		cam_y = $floor(this.player.y * 40);
-		
+		offset_x = $floor(this.player.x * 40) - GAME_WIDTH / 2;
+		offset_y = $floor((this.player.y - this.player.height / 2) * 40) - GAME_HEIGHT / 2;
+		// TODO: bound the edges so you don't see the void beyond the fridge
+		// TODO: ...unless the width or height is smaller than the screen, in which case center the map.
 		height = this.map.height;
 		width = this.map.width;
 		grid = this.map.grid;
@@ -30,8 +39,12 @@ class PlayScene : AbstractScene {
 					img = tt.latest_image;
 				}
 				
-				$gfx_blit_image(img, x * 40, y * 40);
+				$gfx_blit_image(img, x * 40 - offset_x, y * 40 - offset_y);
 			}
+		}
+		
+		for (sprite : this.sprites) {
+			sprite.render(rc, offset_x, offset_y);
 		}
 	}
 }

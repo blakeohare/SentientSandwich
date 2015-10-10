@@ -3,9 +3,28 @@ class Sprite {
 		this.x = x + 0.0;
 		this.y = y + 0.0;
 		this.type = type;
+		// TODO: better sprite definition system.
+		this.width = .75;
+		if (type == 'player') {
+			this.height = .75;
+		} else {
+			this.height = 1.0;
+		}
 	}
 	
 	function update(scene) {
 		// TODO: this
+	}
+	
+	function render(rc, offset_x, offset_y) {
+		
+		width = $floor(this.width * 40);
+		left = $floor(this.x * 40 - width / 2);
+		bottom = $floor(this.y * 40);
+		height = $floor(this.height * 40);
+		top = bottom - height;
+		
+		blue = this.type == 'player' ? 0 : 255;
+		$gfx_draw_rectangle(left - offset_x, top - offset_y, width, height, 255, 0, blue, 255);
 	}
 }
