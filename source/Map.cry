@@ -5,6 +5,16 @@ TILE_ID_TO_SPRITE_TYPE = {
 	'E': 'egg1', // brown egg
 	'e': 'egg2', // white egg
 	'f': 'egg3', // hopping egg
+	'B': 'broccoli',
+	'A': 'antibiotics',
+	'M': 'mayo',
+	
+	'1': 'explain1',
+	'2': 'explain2',
+	'3': 'explain3',
+	'4': 'explain4',
+	'5': 'explain5',
+	'6': 'explain6',
 	
 };
 
@@ -29,6 +39,16 @@ class Map {
 					case 'f':
 					case 'E':
 					case 'e':
+					case 'B':
+					case 'A':
+					case 'M':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '5':
+					case '6':
+					case '7':
 						this.sprites.add([TILE_ID_TO_SPRITE_TYPE[id], x, y]);
 						if (id == 'o') {
 							id = 'b';

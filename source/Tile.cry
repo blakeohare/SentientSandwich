@@ -10,6 +10,9 @@ TILE_DATA = {
 	'/': ['bowl-right', null, true],
 	'b': ['bowl', null, false],
 	' ': ['background', null, false],
+	'L': ['tupperware-left', null, true],
+	'R': ['tupperware-right', null, true],
+	'T': ['tupperware-lid', null, true],
 };
 
 class TileTemplate {

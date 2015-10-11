@@ -4,18 +4,35 @@ TERMINAL_VELOCITY = .9;
 PLAYER_IMAGE_BY_SCALE = {};
 
 SPRITE_HEIGHTS = {
+	'antibiotics': 3,
+	'mayo': 3,
 	'player': .75,
 	'olive': 1.25,
 	'soda': 4,
 	'egg1': 2.3,
 	'egg2': 2.3,
 	'egg3': 2.3,
+	'broccoli': 2.1,
+	'explain1': 2,
+	'explain2': 2,
+	'explain3': 2,
+	'explain4': 2,
+	'explain5': 2,
+	'explain6': 2,
+	'explain7': 2,
 };
+
+IS_SIGN = {};
+for (i = 1; i < 100; ++i) {
+	IS_SIGN['explain' + i] = true;
+}
 
 class Sprite {
 	constructor(type, x, y) {
 		this.x = x + 0.0;
 		this.y = y + 0.0;
+		this.dx = 0;
+		this.dy = 0;
 		this.type = type;
 		// TODO: better sprite definition system.
 		this.width = .75;
@@ -29,6 +46,8 @@ class Sprite {
 		this.player_default_height = IMAGES.get('sprites/player/stand.png').height;
 		this.dead = false;
 		this.ghost = false;
+		this.immune = IS_SIGN.get(type, false);
+		this.ghost = this.immune;
 	}
 	
 	function update(scene, grid) {
@@ -178,7 +197,14 @@ class Sprite {
 			y = $floor(this.y * 40 - offset_y);
 			
 			switch (this.type) {
+				case 'mayo':
+					path = 'sprites/mayo/stand' + ((rc / 5) % 2 + 1) + '.png';
+					img = IMAGES.get_at_height(path, this.pixel_height);
+					$gfx_blit_image(img, x - img.width / 2, y - img.height);
+					break;
+				case 'antibiotics':
 				case 'olive':
+				case 'broccoli':
 				case 'soda':
 				case 'egg1':
 				case 'egg2':
@@ -191,7 +217,16 @@ class Sprite {
 					path = 'sprites/' + this.type + '/stand.png';
 					img = IMAGES.get_at_height(path, this.pixel_height);
 					$gfx_blit_image(img, x - img.width / 2, y - img.height);
-					
+					break;
+				case 'explain1':
+				case 'explain2':
+				case 'explain3':
+				case 'explain4':
+				case 'explain5':
+				case 'explain6':
+				case 'explain7':
+					img = IMAGES.get_at_height('sprites/explain/' + this.type[7:] + '.png', this.pixel_height);
+					$gfx_blit_image(img, x - img.width / 2, y - img.height);
 					break;
 				default:
 					$assert(false, "No rendering defined for sprite type: " + this.type);

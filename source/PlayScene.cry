@@ -54,7 +54,9 @@ class PlayScene : AbstractScene {
 		grid = this.map.grid;
 		
 		for (sprite : this.sprites) {
-			sprite.ghost = false;
+			if (!sprite.immune) {
+				sprite.ghost = false;
+			}
 		}
 		
 		if (this.player.inhaling) {
@@ -64,7 +66,7 @@ class PlayScene : AbstractScene {
 			player_y = this.player.y;
 			right = this.player.facing_right;
 			for (sprite : this.sprites) {
-				if (sprite != this.player) {
+				if (sprite != this.player && !sprite.immune) {
 					dy = $abs(player_y - sprite.y);
 					dx = player_x - sprite.x;
 					dist = (dx ** 2 + dy ** 2) ** .5;
