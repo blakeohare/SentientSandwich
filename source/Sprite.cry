@@ -4,7 +4,9 @@ TERMINAL_VELOCITY = .9;
 PLAYER_IMAGE_BY_SCALE = {};
 
 SPRITE_HEIGHTS = {
-	'olive': 50,
+	'player': .75,
+	'olive': 1.25,
+	'soda': 2.3,
 };
 
 class Sprite {
@@ -14,11 +16,8 @@ class Sprite {
 		this.type = type;
 		// TODO: better sprite definition system.
 		this.width = .75;
-		if (type == 'player') {
-			this.height = .75;
-		} else {
-			this.height = 1.0;
-		}
+		this.height = SPRITE_HEIGHTS[this.type];
+		this.pixel_height = $floor(this.height * 40);
 		this.ground = null;
 		this.vy = 0;
 		this.dx = 0;
@@ -150,7 +149,9 @@ class Sprite {
 			
 			scale = 1.0 * height / this.player_default_height;
 			flipped = this.facing_right;
-			if (this.ground == null) {
+			if (this.inhaling) {
+				path = 'sprites/player/inhale.png';
+			} else if (this.ground == null) {
 				if (this.vy < 0) {
 					path = 'sprites/player/jumpup.png';
 				} else {
@@ -175,8 +176,9 @@ class Sprite {
 			
 			switch (this.type) {
 				case 'olive':
+				case 'soda':
 					path = 'sprites/' + this.type + '/stand.png';
-					img = IMAGES.get_at_height(path, SPRITE_HEIGHTS[this.type]);
+					img = IMAGES.get_at_height(path, this.pixel_height);
 					$gfx_blit_image(img, x - img.width / 2, y - img.height);
 					break;
 				default:
