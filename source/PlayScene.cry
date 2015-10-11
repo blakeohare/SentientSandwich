@@ -49,6 +49,10 @@ class PlayScene : AbstractScene {
 		
 		grid = this.map.grid;
 		
+		for (sprite : this.sprites) {
+			sprite.ghost = false;
+		}
+		
 		if (this.player.inhaling) {
 			INHALE_DISTANCE = 4.0;
 			nearby = [];
@@ -56,23 +60,29 @@ class PlayScene : AbstractScene {
 			player_y = this.player.y;
 			right = this.player.facing_right;
 			for (sprite : this.sprites) {
-				dy = $abs(player_y - sprite.y);
-				dx = player_x - sprite.x;
-				dist = (dx ** 2 + dy ** 2) ** .5;
-				if (dist < INHALE_DISTANCE) {
-					if (right) {
-						if (sprite.x > player_x) {
-							nearby.add(sprite);
-							nearby.add(dist);
+				if (sprite != this.player) {
+					dy = $abs(player_y - sprite.y);
+					dx = player_x - sprite.x;
+					dist = (dx ** 2 + dy ** 2) ** .5;
+					if (dist < INHALE_DISTANCE) {
+						if (dist < .3) {
+							sprite.dead = true;
+							// TODO: add to size
 						}
-					} else {
-						if (sprite.x < player_x) {
-							nearby.add(sprite);
-							nearby.add(dist);
+						if (right) {
+							if (sprite.x > player_x) {
+								nearby.add(sprite);
+								nearby.add(dist);
+							}
+						} else {
+							if (sprite.x < player_x) {
+								nearby.add(sprite);
+								nearby.add(dist);
+							}
 						}
 					}
+					sprite.ghost = false;
 				}
-				sprite.ghost = false;
 			}
 			
 			for (i = 0; i < nearby.length; i += 2) {
@@ -87,9 +97,16 @@ class PlayScene : AbstractScene {
 			}
 		}
 		
+		new_sprites = [];
 		for (sprite : this.sprites) {
 			sprite.update(this, grid);
+			
+			if (!sprite.dead) {
+				new_sprites.add(sprite);
+			}
 		}
+		
+		this.sprites = new_sprites;
 		
 	}
 	
