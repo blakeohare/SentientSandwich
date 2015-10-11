@@ -1,0 +1,17 @@
+
+LEVEL_ORDER = [
+	'tutorial',
+	'level1',
+	'level2',
+];
+
+// null is used as a flag to indicate you won the game.
+LEVEL_ORDER.add(null);
+
+// pass in null as the current level to get the first level
+function get_next_level(original) {
+	if (original == null) return LEVEL_ORDER[0];
+	for (i = 0; i < LEVEL_ORDER.length; ++i) {
+		if (LEVEL_ORDER[i] == original) return LEVEL_ORDER[i + 1];
+	}
+}
