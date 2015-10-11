@@ -28,6 +28,11 @@ for (i = 1; i < 100; ++i) {
 	IS_SIGN['explain' + i] = true;
 }
 
+CANT_EAT = {
+	'antibiotics': true,
+	'mayo': true,
+};
+
 SPRITE_ID_ALLOC = [0];
 
 class Sprite {
@@ -56,6 +61,7 @@ class Sprite {
 		this.counter = 0;
 		this.start_x = this.x;
 		this.start_y = this.y;
+		this.death_counter = 0;
 	}
 	
 	function update(scene, grid) {
@@ -188,6 +194,10 @@ class Sprite {
 	function render(rc, offset_x, offset_y) {
 		
 		if (this.type == 'player') {
+			
+			if (this.death_counter > 0) {
+				this.death_counter++;
+			}
 			bottom = $floor(this.y * 40);
 			height = $floor(this.height * 40);
 			top = bottom - height;
@@ -207,6 +217,8 @@ class Sprite {
 			} else {
 				path = 'sprites/player/stand.png';
 			}
+			scale = scale * (.95 ** this.death_counter);
+			if (scale < .1) scale = .1;
 			img = IMAGES.get_scaled(path, scale, flipped);
 			
 			width = img.width;

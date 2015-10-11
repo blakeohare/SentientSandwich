@@ -78,6 +78,10 @@ class PlayScene : AbstractScene {
 						if (dist < .3) {
 							sprite.dead = true;
 							this.object_count++;
+							if (CANT_EAT.get(sprite.type, false)) {
+								this.player.death_counter++;
+								this.next = new FadeScene(this, new PlayScene(this.id));
+							}
 						}
 						if (right) {
 							if (sprite.x > player_x) {
