@@ -22,6 +22,10 @@ class PlayScene : AbstractScene {
 	
 		this.player.height = .75 + .24 * this.object_count;
 		
+		if (this.player.ground == this.map.goal_tile) {
+			this.next = new FadeScene(this, new PlayScene('level1'));
+		}
+		
 		for (event : events) {
 			switch (event.key) {
 				case 'space':

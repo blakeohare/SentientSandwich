@@ -5,6 +5,7 @@ TILE_ID_TO_SPRITE_TYPE = {
 	'E': 'egg1', // brown egg
 	'e': 'egg2', // white egg
 	'f': 'egg3', // hopping egg
+	'F': 'fly',
 	'B': 'broccoli',
 	'A': 'antibiotics',
 	'M': 'mayo',
@@ -28,6 +29,7 @@ class Map {
 		this.height = height;
 		this.sprites = [];
 		grid = make_grid(width, height);
+		this.exit_coords = null;
 		for (y = 0; y < height; ++y) {
 			for (x = 0; x < width; ++x) {
 				id = rows[y][x];
@@ -42,6 +44,7 @@ class Map {
 					case 'B':
 					case 'A':
 					case 'M':
+					case 'F':
 					case '1':
 					case '2':
 					case '3':
@@ -60,8 +63,21 @@ class Map {
 						break;
 				}
 				grid[x][y] = new Tile(id, x, y);
+				if (id == 'Q') {
+					this.exit_coords = [x, y];
+				}
 			}
 		}
 		this.grid = grid;
+		
+		x = this.exit_coords[0];
+		y = this.exit_coords[1];
+		while (true) {
+			if (grid[x][++y].blocking) {
+				this.goal_tile = grid[x][y]; // when the player has this as their ground tile, then that indicates the level has been won.
+				
+				break;
+			}
+		}
 	}
 }

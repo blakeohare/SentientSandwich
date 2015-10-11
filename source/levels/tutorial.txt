@@ -1,10 +1,10 @@
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x                       x
 x           6           x
-x                       x
-x                       x
-x                       x
-x         A   M         x
+x            F F      Q x
+x                    {-}x
+x                    [#]x
+x         A   M      [#]x
 x     xxxxxxxxxxxxxxxxxxx
 x                       x
 x                       x

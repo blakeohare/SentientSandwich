@@ -12,6 +12,7 @@ SPRITE_HEIGHTS = {
 	'egg1': 2.3,
 	'egg2': 2.3,
 	'egg3': 2.3,
+	'fly': 0.667,
 	'broccoli': 2.1,
 	'explain1': 2,
 	'explain2': 2,
@@ -26,6 +27,8 @@ IS_SIGN = {};
 for (i = 1; i < 100; ++i) {
 	IS_SIGN['explain' + i] = true;
 }
+
+SPRITE_ID_ALLOC = [0];
 
 class Sprite {
 	constructor(type, x, y) {
@@ -48,10 +51,15 @@ class Sprite {
 		this.ghost = false;
 		this.immune = IS_SIGN.get(type, false);
 		this.ghost = this.immune;
+		this.is_fly = type == 'fly';
+		this.unique_id = SPRITE_ID_ALLOC[0]++;
+		this.counter = 0;
+		this.start_x = this.x;
+		this.start_y = this.y;
 	}
 	
 	function update(scene, grid) {
-		
+		this.counter++;
 		// Phase 1: apply y vector
 		
 		if (this.ghost) {
@@ -60,6 +68,21 @@ class Sprite {
 			this.dx = 0;
 			this.dy = 0;
 			this.ground = null;
+		} else if (this.is_fly && !this.ghost) {
+			target_x = 3 * $cos(this.unique_id + 2 * 3.14159 * this.counter / (FPS * 3)) + this.start_x;
+			target_y = .6 * $sin(this.unique_id + 2 * 3.14159 * this.counter / (FPS * 4.5)) + this.start_y;
+			
+			dx = target_x - this.x;
+			dy = target_y - this.y;
+			dist = (dx ** 2 + dy ** 2) ** .5;
+			if (dist > .4) {
+				dx = .4 * dx / dist;
+				dy = .4 * dy / dist;
+			}
+			
+			this.x += dx;
+			this.y += dy;
+			
 		} else {
 			
 			effective_height = this.height * .9;
@@ -197,6 +220,11 @@ class Sprite {
 			y = $floor(this.y * 40 - offset_y);
 			
 			switch (this.type) {
+				case 'fly':
+					path = 'sprites/fly/fly' + ((rc / 3) % 2 + 1) + '.png';
+					img = IMAGES.get_at_height(path, this.pixel_height);
+					$gfx_blit_image(img, x - img.width / 2, y - img.height);
+					break;
 				case 'mayo':
 					path = 'sprites/mayo/stand' + ((rc / 5) % 2 + 1) + '.png';
 					img = IMAGES.get_at_height(path, this.pixel_height);

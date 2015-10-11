@@ -13,6 +13,14 @@ TILE_DATA = {
 	'L': ['tupperware-left', null, true],
 	'R': ['tupperware-right', null, true],
 	'T': ['tupperware-lid', null, true],
+	
+	'Q': ['exit-sign', 3, false],
+	'[': ['exit-w', null, false],
+	']': ['exit-e', null, false],
+	'{': ['exit-nw', null, false],
+	'}': ['exit-ne', null, false],
+	'-': ['exit-n', null, false],
+	'#': ['exit-m', null, false],
 };
 
 class TileTemplate {

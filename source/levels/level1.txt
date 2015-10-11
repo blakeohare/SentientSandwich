@@ -1,8 +1,9 @@
 xxxxxxxxxxxxxxxx
 x              x
-x              x
-x              x
-x C C C C      x
+x Q            x
+x{-}           x
+x[#]           x
+x[#]    C      x
 xxxxxxxxxxxx   x
 x              x
 x              x
