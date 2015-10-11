@@ -67,11 +67,11 @@ class PlayScene : AbstractScene {
 			INHALE_DISTANCE = 4.0;
 			nearby = [];
 			player_x = this.player.x;
-			player_y = this.player.y;
+			player_y = this.player.y - this.player.height / 2;
 			right = this.player.facing_right;
 			for (sprite : this.sprites) {
 				if (sprite != this.player && !sprite.immune) {
-					dy = $abs(player_y - sprite.y);
+					dy = $abs(player_y - (sprite.y - sprite.height / 2));
 					dx = player_x - sprite.x;
 					dist = (dx ** 2 + dy ** 2) ** .5;
 					if (dist < INHALE_DISTANCE) {
@@ -104,9 +104,9 @@ class PlayScene : AbstractScene {
 				intensity = 1.0 - nearby[i + 1] / INHALE_DISTANCE; // intensity is 0.0 to 1.0
 				sum = 3 + intensity;
 				x = (sprite.x * 3 + player_x * intensity) / sum;
-				y = (sprite.y * 3 + player_y * intensity) / sum;
+				y = ((sprite.y - sprite.height / 2) * 3 + player_y * intensity) / sum;
 				sprite.dx = x - sprite.x;
-				sprite.dy = y - sprite.y;
+				sprite.dy = y - (sprite.y - sprite.height / 2);
 				sprite.ghost = true;
 			}
 		}
