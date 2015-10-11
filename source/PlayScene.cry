@@ -14,12 +14,13 @@ class PlayScene : AbstractScene {
 			}
 			this.sprites.add(sprite);
 		}
+		this.player.inhaling = false;
 	}
 	
 	function update(events, pressed_keys) {
 		for (event : events) {
 			switch (event.key) {
-				case 'up':
+				case 'space':
 					if (event.down) {
 						if (this.player.ground != null) {
 							this.player.ground = null;
@@ -31,6 +32,7 @@ class PlayScene : AbstractScene {
 						}
 					}
 					break;
+					
 				default:
 					break;
 			}
@@ -43,10 +45,52 @@ class PlayScene : AbstractScene {
 			this.player.dx = v;
 		}
 		
+		this.player.inhaling = pressed_keys.get('z', false);
+		
 		grid = this.map.grid;
+		
+		if (this.player.inhaling) {
+			INHALE_DISTANCE = 4.0;
+			nearby = [];
+			player_x = this.player.x;
+			player_y = this.player.y;
+			right = this.player.facing_right;
+			for (sprite : this.sprites) {
+				dy = $abs(player_y - sprite.y);
+				dx = player_x - sprite.x;
+				dist = (dx ** 2 + dy ** 2) ** .5;
+				if (dist < INHALE_DISTANCE) {
+					if (right) {
+						if (sprite.x > player_x) {
+							nearby.add(sprite);
+							nearby.add(dist);
+						}
+					} else {
+						if (sprite.x < player_x) {
+							nearby.add(sprite);
+							nearby.add(dist);
+						}
+					}
+				}
+				sprite.ghost = false;
+			}
+			
+			for (i = 0; i < nearby.length; i += 2) {
+				sprite = nearby[i];
+				intensity = 1.0 - nearby[i + 1] / INHALE_DISTANCE; // intensity is 0.0 to 1.0
+				sum = 3 + intensity;
+				x = (sprite.x * 3 + player_x * intensity) / sum;
+				y = (sprite.y * 3 + player_y * intensity) / sum;
+				sprite.dx = x - sprite.x;
+				sprite.dy = y - sprite.y;
+				sprite.ghost = true;
+			}
+		}
+		
 		for (sprite : this.sprites) {
 			sprite.update(this, grid);
 		}
+		
 	}
 	
 	function render(rc) {
@@ -68,8 +112,8 @@ class PlayScene : AbstractScene {
 		top_pixel = top * 40 - offset_y;
 		bottom_pixel = bottom * 40 - offset_y;
 		
-		// THis is all broken. 
-		crop_left = $floor(left_pixel / 40) + 1;//- 1;
+		// This is all broken. 
+		crop_left = $floor(-left_pixel / 40) + 1;//- 1;
 		crop_right = $floor((right_pixel - GAME_WIDTH) / 40) - 1;
 		crop_top = $floor(top_pixel / 40) - 1;
 		crop_bottom = $floor((bottom_pixel - GAME_HEIGHT) / 40) - 1;

@@ -21,94 +21,104 @@ class Sprite {
 		this.facing_right = true;
 		this.walking = false;
 		this.player_default_height = IMAGES.get('sprites/player/stand.png').height;
+		this.dead = false;
+		this.ghost = false;
 	}
 	
 	function update(scene, grid) {
 		
 		// Phase 1: apply y vector
 		
-		effective_height = this.height * .9;
-		
-		if (this.ground != null) {
-			// you are standing on ground. set Y to the ground value.
-			this.y = this.ground.y;
-			this.vy = 0;
+		if (this.ghost) {
+			this.x += this.dx;
+			this.y += this.dy;
+			this.dx = 0;
+			this.dy = 0;
+			this.ground = null;
 		} else {
-			this.vy += GRAVITY;
-			if ($abs(this.vy) > TERMINAL_VELOCITY) {
-				this.vy = (this.vy < 0) ? -TERMINAL_VELOCITY : TERMINAL_VELOCITY;
-			}
-			new_y = this.y + this.vy;
-			col = $floor(this.x);
-			if (this.vy < 0) {
-				// you are flying up in the air
-				// check to see if you bonk your head.
-				top_y = new_y - effective_height;
-				row = $floor(top_y);
-				tile = grid[col][row];
-				if (tile.blocking) {
-					// BONK!
-					this.vy = 0;
-					this.y = row + 1 + effective_height + EPSILON;
-				} else {
-					this.y = new_y;
-				}
+			
+			effective_height = this.height * .9;
+			
+			if (this.ground != null) {
+				// you are standing on ground. set Y to the ground value.
+				this.y = this.ground.y;
+				this.vy = 0;
 			} else {
-				// you are falling down
-				row = $floor(new_y);
-				tile = grid[col][row];
-				if (tile.blocking) {
-					this.y = tile.y + 0.0;
-					this.ground = tile;
-				} else {
-					this.y = new_y;
+				this.vy += GRAVITY;
+				if ($abs(this.vy) > TERMINAL_VELOCITY) {
+					this.vy = (this.vy < 0) ? -TERMINAL_VELOCITY : TERMINAL_VELOCITY;
 				}
-			}
-		}
-		
-		// Phase 2: apply x vector
-		
-		this.walking = false;
-		if (this.dx != 0) {
-			this.walking = true;
-			this.facing_right = this.dx > 0;
-			new_x = this.x + this.dx;
-			old_col = $floor(this.x);
-			new_col = $floor(new_x);
-			if (old_col == new_col) {
-				this.x = new_x;
-			} else {
-				bottom_y = $floor(this.y - EPSILON);
-				top_y = $floor(this.y - effective_height);
-				blocked = false;
-				for (y = top_y; y <= bottom_y; ++y) {
-					tile = grid[new_col][y];
+				new_y = this.y + this.vy;
+				col = $floor(this.x);
+				if (this.vy < 0) {
+					// you are flying up in the air
+					// check to see if you bonk your head.
+					top_y = new_y - effective_height;
+					row = $floor(top_y);
+					tile = grid[col][row];
 					if (tile.blocking) {
-						blocked = true;
-					}
-				}
-				
-				if (blocked) {
-					if (this.dx > 0) {
-						this.x = new_col - EPSILON;
+						// BONK!
+						this.vy = 0;
+						this.y = row + 1 + effective_height + EPSILON;
 					} else {
-						this.x = new_col + 1 + EPSILON;
+						this.y = new_y;
 					}
 				} else {
+					// you are falling down
+					row = $floor(new_y);
+					tile = grid[col][row];
+					if (tile.blocking) {
+						this.y = tile.y + 0.0;
+						this.ground = tile;
+					} else {
+						this.y = new_y;
+					}
+				}
+			}
+			
+			// Phase 2: apply x vector
+			
+			this.walking = false;
+			if (this.dx != 0) {
+				this.walking = true;
+				this.facing_right = this.dx > 0;
+				new_x = this.x + this.dx;
+				old_col = $floor(this.x);
+				new_col = $floor(new_x);
+				if (old_col == new_col) {
 					this.x = new_x;
-					if (this.ground != null) {
-						new_ground = grid[new_col][$floor(this.y)];
-						if (new_ground.blocking) {
-							this.ground = new_ground;
+				} else {
+					bottom_y = $floor(this.y - EPSILON);
+					top_y = $floor(this.y - effective_height);
+					blocked = false;
+					for (y = top_y; y <= bottom_y; ++y) {
+						tile = grid[new_col][y];
+						if (tile.blocking) {
+							blocked = true;
+						}
+					}
+					
+					if (blocked) {
+						if (this.dx > 0) {
+							this.x = new_col - EPSILON;
 						} else {
-							this.ground = null;
+							this.x = new_col + 1 + EPSILON;
+						}
+					} else {
+						this.x = new_x;
+						if (this.ground != null) {
+							new_ground = grid[new_col][$floor(this.y)];
+							if (new_ground.blocking) {
+								this.ground = new_ground;
+							} else {
+								this.ground = null;
+							}
 						}
 					}
 				}
+				this.dx = 0;	
 			}
-			this.dx = 0;	
 		}
-		
 	}
 	
 	function render(rc, offset_x, offset_y) {
