@@ -46,14 +46,21 @@ class PlayScene : AbstractScene {
 			}
 		}
 		
-		v = .2;
-		if (pressed_keys.get('left', false)) {
-			this.player.dx = -v;
-		} else if (pressed_keys.get('right', false)) {
-			this.player.dx = v;
-		}
 		
 		this.player.inhaling = pressed_keys.get('z', false);
+		v = .2;
+		if (this.player.inhaling) {
+			v = 0;
+		}
+		if (pressed_keys.get('left', false)) {
+			this.player.dx = -v;
+			this.player.facing_right = false;
+		} else if (pressed_keys.get('right', false)) {
+			this.player.dx = v;
+			this.player.facing_right = true;
+		}
+	
+		
 		
 		grid = this.map.grid;
 		
