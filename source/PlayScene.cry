@@ -15,16 +15,20 @@ class PlayScene : AbstractScene {
 			this.sprites.add(sprite);
 		}
 		this.player.inhaling = false;
+		this.object_count = 0;
 	}
 	
 	function update(events, pressed_keys) {
+	
+		this.player.height = .75 + .24 * this.object_count;
+		
 		for (event : events) {
 			switch (event.key) {
 				case 'space':
 					if (event.down) {
 						if (this.player.ground != null) {
 							this.player.ground = null;
-							this.player.vy = -.9;
+							this.player.vy = -(.7 + this.object_count * .1);
 						}
 					} else {
 						if (this.player.ground == null && this.player.vy < 0) {
@@ -67,7 +71,7 @@ class PlayScene : AbstractScene {
 					if (dist < INHALE_DISTANCE) {
 						if (dist < .3) {
 							sprite.dead = true;
-							// TODO: add to size
+							this.object_count++;
 						}
 						if (right) {
 							if (sprite.x > player_x) {
