@@ -146,7 +146,18 @@ class Sprite {
 			
 			scale = 1.0 * height / this.player_default_height;
 			flipped = this.facing_right;
-			img = IMAGES.get_scaled('sprites/player/stand.png', scale, flipped);
+			if (this.ground == null) {
+				if (this.vy < 0) {
+					path = 'sprites/player/jumpup.png';
+				} else {
+					path = 'sprites/player/jump.png';
+				}
+			} else if (this.walking) {
+				path = 'sprites/player/walk' + ((rc / 3) % 6 + 1) + '.png';
+			} else {
+				path = 'sprites/player/stand.png';
+			}
+			img = IMAGES.get_scaled(path, scale, flipped);
 			
 			width = img.width;
 			left = $floor(this.x * 40 - width / 2);
