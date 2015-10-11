@@ -1,6 +1,7 @@
 TILE_ID_TO_SPRITE_TYPE = {
 	'o': 'olive',
 	'@': 'player',
+	'C': 'soda',
 };
 
 class Map {
@@ -20,6 +21,7 @@ class Map {
 					// TODO: add other sprites here as they are invented
 					case '@':
 					case 'o':
+					case 'C':
 						this.sprites.add([TILE_ID_TO_SPRITE_TYPE[id], x, y]);
 						if (id == 'o') {
 							id = 'b';
