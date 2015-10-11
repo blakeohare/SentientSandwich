@@ -11,9 +11,8 @@ x                       x
 x    5                  x
 x                       x
 x                       x
-x C         f e E e     x
+x C           f E e     x
 xxxxxxxxxxxxxxxxxxxxx   x
-x                       x
 x                       x
 x                       x
 x                   4   x
@@ -22,7 +21,6 @@ x        TTTTT          x
 x        L   R          x
 x        L B R          x
 x      xxxxxxxxxxxxxxxxxx
-x             xx        x
 x             xx        x
 x   2         xx        x
 x             xx    1   x

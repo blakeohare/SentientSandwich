@@ -1,3 +1,7 @@
+SIZE_CHECK = {
+	'soda': 10
+};
+
 class PlayScene : AbstractScene {
 	constructor(id) : base() {
 		this.id = id;
@@ -89,31 +93,35 @@ class PlayScene : AbstractScene {
 			right = this.player.facing_right;
 			for (sprite : this.sprites) {
 				if (sprite != this.player && !sprite.immune) {
-					dy = $abs(player_y - (sprite.y - sprite.height / 2));
-					dx = player_x - sprite.x;
-					dist = (dx ** 2 + dy ** 2) ** .5;
-					if (dist < INHALE_DISTANCE) {
-						if (dist < .3) {
-							sprite.dead = true;
-							this.object_count++;
-							if (CANT_EAT.get(sprite.type, false)) {
-								this.player.death_counter++;
-								this.next = new FadeScene(this, new PlayScene(this.id));
+					size_check = SIZE_CHECK.get(sprite.type, null);
+					size_check = size_check == null || size_check <= this.object_count;
+					if (size_check) {
+						dy = $abs(player_y - (sprite.y - sprite.height / 2));
+						dx = player_x - sprite.x;
+						dist = (dx ** 2 + dy ** 2) ** .5;
+						if (dist < INHALE_DISTANCE) {
+							if (dist < .3) {
+								sprite.dead = true;
+								this.object_count++;
+								if (CANT_EAT.get(sprite.type, false)) {
+									this.player.death_counter++;
+									this.next = new FadeScene(this, new PlayScene(this.id));
+								}
+							}
+							if (right) {
+								if (sprite.x > player_x) {
+									nearby.add(sprite);
+									nearby.add(dist);
+								}
+							} else {
+								if (sprite.x < player_x) {
+									nearby.add(sprite);
+									nearby.add(dist);
+								}
 							}
 						}
-						if (right) {
-							if (sprite.x > player_x) {
-								nearby.add(sprite);
-								nearby.add(dist);
-							}
-						} else {
-							if (sprite.x < player_x) {
-								nearby.add(sprite);
-								nearby.add(dist);
-							}
-						}
+						sprite.ghost = false;
 					}
-					sprite.ghost = false;
 				}
 			}
 			
