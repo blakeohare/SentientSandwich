@@ -1,0 +1,26 @@
+xxxxxxxxxxxxxxxxxxxx
+x                  x
+x                  x
+x               Q  x
+x              {-} x
+x              [#] x
+x              [#] x
+x           xxxxxxxx
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x                  x
+x               F  x
+x  F    F    F     x
+x F F F F F F F F  x
+x M  MF M  M  @  M x
+xxxxxxxxxxxxxxxxxxxx

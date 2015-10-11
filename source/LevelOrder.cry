@@ -3,6 +3,9 @@ LEVEL_ORDER = [
 	'tutorial',
 	'level1',
 	'level2',
+	'level3',
+	'level4',
+	'level5',
 ];
 
 // null is used as a flag to indicate you won the game.
