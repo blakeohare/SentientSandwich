@@ -1,6 +1,6 @@
 xxxxxxxxxxxxxxxxxxxxxxxxx
 x                       x
-x           6           x
+x       6               x
 x            F F      Q x
 x                    {-}x
 x                    [#]x
