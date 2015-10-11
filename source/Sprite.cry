@@ -43,6 +43,12 @@ CANT_EAT = {
 
 SPRITE_ID_ALLOC = [0];
 
+enum RoachState {
+	WAIT,
+	SCUTTLE,
+	CHASE,
+}
+
 class Sprite {
 	constructor(type, x, y) {
 		this.x = x + 0.0;
@@ -65,11 +71,16 @@ class Sprite {
 		this.immune = IS_SIGN.get(type, false);
 		this.ghost = this.immune;
 		this.is_fly = type == 'fly';
+		this.is_roach = type == 'roach1';
 		this.unique_id = SPRITE_ID_ALLOC[0]++;
 		this.counter = 0;
 		this.start_x = this.x;
 		this.start_y = this.y;
 		this.death_counter = 0;
+		this.state = RoachState.WAIT;
+		this.state_counter = $floor($random() * FPS * 2);
+		this.roach_left = $random() < .5;
+		this.wait_expire = $floor($random() * FPS * 2);
 	}
 	
 	function update(scene, grid) {
@@ -96,9 +107,29 @@ class Sprite {
 			
 			this.x += dx;
 			this.y += dy;
-			
 		} else {
-			
+			if (this.is_roach && !this.ghost) {
+				switch (this.state) {
+					case RoachState.WAIT:
+						if (this.state_counter > this.wait_expire) {
+							this.state_counter = 0;
+							this.state = RoachState.SCUTTLE;
+							this.roach_left = $random() < .5;
+						}
+						break;
+					case RoachState.SCUTTLE:
+						if (this.state_counter > FPS * 2) {
+							this.state_counter = 0;
+							this.state = RoachState.WAIT;
+							this.wait_expire = $floor(FPS * 2 * $random());
+						}
+						this.dx = this.roach_left ? -.1 : .1;
+						break;
+					case RoachState.CHASE:
+						break;
+				}
+				this.state_counter++;
+			}
 			effective_height = this.height * .9;
 			
 			if (this.ground != null) {
@@ -255,11 +286,21 @@ class Sprite {
 					img = IMAGES.get_at_height(path, this.pixel_height);
 					$gfx_blit_image(img, x - img.width / 2, y - img.height);
 					break;
+				case 'roach1':
+					if (this.walking) {
+						path = 'sprites/roach1/walk' + ((rc / 2) % 5 + 1) + '.png';
+					} else {
+						path = 'sprites/roach1/stand.png';
+					}
+					scale = 80.0 / 157;
+					img = IMAGES.get_scaled(path, scale, this.facing_right);
+					$gfx_blit_image(img, x - img.width / 2, y - img.height);
+					break;
+				case 'roach2':
 				case 'antibiotics':
 				case 'olive':
 				case 'broccoli':
 				case 'cheese':
-				case 'roach1': // TODO: this will have to be special.
 				case 'soda':
 				case 'egg1':
 				case 'egg2':

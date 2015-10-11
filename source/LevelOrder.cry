@@ -1,13 +1,13 @@
 
 LEVEL_ORDER = [
-	//*
+	/*
 	'tutorial',
 	'level1',
 	'level4',
+	//*/
 	'level2',
 	'level3',
 	'level5',
-	//*/
 	'win',
 ];
 

@@ -24,11 +24,16 @@ class PlayScene : AbstractScene {
 		if (this.id == 'win') {
 			this.object_count = 4;
 		}
+		
+		this.update_player_height();
+	}
+	
+	function update_player_height() {
+		this.player.height = .75 + .24 * this.object_count;
 	}
 	
 	function update(events, pressed_keys) {
-	
-		this.player.height = .75 + .24 * this.object_count;
+		this.update_player_height();
 		
 		if (this.player.ground == this.map.goal_tile) {
 			next_level = get_next_level(this.id);
