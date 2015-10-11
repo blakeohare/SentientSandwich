@@ -8,7 +8,8 @@ class PlayScene : AbstractScene {
 		this.map = new Map(id);
 		this.map.scene = this;
 		this.player = null;
-		this.sprites = [];
+		sprites = [];
+		signs = [];
 		for (sprite_data : this.map.sprites) {
 			type = sprite_data[0];
 			x = sprite_data[1] + .5;
@@ -17,10 +18,17 @@ class PlayScene : AbstractScene {
 			if (type == 'player') {
 				this.player = sprite;
 			}
-			this.sprites.add(sprite);
 			sprite.map = this.map;
 			sprite.scene = this;
+			if (sprite.immune) {
+				signs.add(sprite);
+			} else {
+				sprites.add(sprite);
+			}
 		}
+		
+		this.sprites = signs + sprites;
+		
 		this.player.inhaling = false;
 		this.object_count = 0;
 		
