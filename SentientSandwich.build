@@ -17,7 +17,7 @@
 	
 	<target name="js_remote">
 		<platform>js</platform>
-		<jsfileprefix>/demos/sentientsandwich</jsfileprefix>
+		<jsfileprefix>/demos/sentientsandwich/</jsfileprefix>
 	</target>
 	
 	<target name="windows">
