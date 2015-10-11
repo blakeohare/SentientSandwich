@@ -4,6 +4,7 @@ class ImageLibrary {
 		this.flipped = {};
 		this.by_scale = {};
 		this.flipped_by_scale = {};
+		this.at_height = {};
 	}
 	
 	function get_scaled(path, scale, flipped = false) {
@@ -21,6 +22,26 @@ class ImageLibrary {
 			img = $gfx_image_scale(img, $floor(img.width * scale), $floor(img.height * scale));
 			images[path] = img;
 		}
+		return img;
+	}
+	
+	function get_at_height(path, height) {
+		lookup = this.at_height.get(height, null);
+		if (lookup == null) {
+			lookup = {};
+			this.at_height[height] = lookup;
+		}
+		
+		img = lookup.get(path, null);
+		if (img == null) {
+			img = this.get(path, false);
+			if (img.height != height) {
+				r = 1.0 * height / img.height;
+				img = $gfx_image_scale(img, $floor(r * img.width), $floor(r * img.height));
+			}
+			lookup[path] = img;
+		}
+		
 		return img;
 	}
 	

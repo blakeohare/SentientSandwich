@@ -3,6 +3,10 @@ TERMINAL_VELOCITY = .9;
 
 PLAYER_IMAGE_BY_SCALE = {};
 
+SPRITE_HEIGHTS = {
+	'olive': 50,
+};
+
 class Sprite {
 	constructor(type, x, y) {
 		this.x = x + 0.0;
@@ -166,14 +170,20 @@ class Sprite {
 			
 		} else {
 			
-			width = $floor(this.width * 40);
-			left = $floor(this.x * 40 - width / 2);
-			bottom = $floor(this.y * 40);
-			height = $floor(this.height * 40);
-			top = bottom - height;
+			x = $floor(this.x * 40 - offset_x);
+			y = $floor(this.y * 40 - offset_y);
 			
-			blue = this.type == 'player' ? 0 : 255;
-			$gfx_draw_rectangle(left - offset_x, top - offset_y, width, height, 255, 0, blue, 255);
+			switch (this.type) {
+				case 'olive':
+					path = 'sprites/' + this.type + '/stand.png';
+					img = IMAGES.get_at_height(path, SPRITE_HEIGHTS[this.type]);
+					$gfx_blit_image(img, x - img.width / 2, y - img.height);
+					break;
+				default:
+					$assert(false, "No rendering defined for sprite type: " + this.type);
+					break;
+			}
+			
 		}
 	}
 }
