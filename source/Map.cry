@@ -18,6 +18,10 @@ TILE_ID_TO_SPRITE_TYPE = {
 	'4': 'explain4',
 	'5': 'explain5',
 	'6': 'explain6',
+	'7': 'explain7',
+	'8': 'explain8',
+	'9': 'explain9',
+	'0': 'explain0',
 	
 };
 
@@ -56,6 +60,9 @@ class Map {
 					case '5':
 					case '6':
 					case '7':
+					case '8':
+					case '9':
+					case '0':
 						this.sprites.add([TILE_ID_TO_SPRITE_TYPE[id], x, y]);
 						if (id == 'o') {
 							id = 'b';

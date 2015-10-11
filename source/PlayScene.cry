@@ -46,7 +46,12 @@ class PlayScene : AbstractScene {
 						}
 					}
 					break;
-					
+				
+				case 'r':
+					if (event.down) {
+						this.next = new FadeScene(this, new PlayScene(this.id));
+					}
+					break;
 				default:
 					break;
 			}

@@ -23,6 +23,9 @@ SPRITE_HEIGHTS = {
 	'explain5': 2,
 	'explain6': 2,
 	'explain7': 2,
+	'explain8': 2,
+	'explain9': 2,
+	'explain0': 2,
 };
 
 IS_SIGN = {};
@@ -269,6 +272,9 @@ class Sprite {
 				case 'explain5':
 				case 'explain6':
 				case 'explain7':
+				case 'explain8':
+				case 'explain9':
+				case 'explain0':
 					img = IMAGES.get_at_height('sprites/explain/' + this.type[7:] + '.png', this.pixel_height);
 					$gfx_blit_image(img, x - img.width / 2, y - img.height);
 					break;
