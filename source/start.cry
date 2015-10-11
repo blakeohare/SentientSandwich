@@ -4,6 +4,23 @@ GAME_HEIGHT = 480;
 
 EPSILON = 0.00001;
 
+STARTING_SCENE = 'level1';
+
+LEVEL_ORDER = [
+	//'tutorial',
+	'level1',
+	'level2',
+];
+
+LEVEL_ORDER.add(null);
+
+function get_next_level(original) {
+	if (original == null) return LEVEL_ORDER[0];
+	for (i = 0; i < LEVEL_ORDER.length; ++i) {
+		if (LEVEL_ORDER[i] == original) return LEVEL_ORDER[i + 1];
+	}
+}
+
 import 'AbstractScene.cry';
 
 import 'FadeScene.cry';

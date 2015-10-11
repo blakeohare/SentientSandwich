@@ -13,6 +13,8 @@ SPRITE_HEIGHTS = {
 	'egg2': 2.3,
 	'egg3': 2.3,
 	'fly': 0.667,
+	'cheese': 2,
+	'roach1': 1.4,
 	'broccoli': 2.1,
 	'explain1': 2,
 	'explain2': 2,
@@ -245,6 +247,8 @@ class Sprite {
 				case 'antibiotics':
 				case 'olive':
 				case 'broccoli':
+				case 'cheese':
+				case 'roach1': // TODO: this will have to be special.
 				case 'soda':
 				case 'egg1':
 				case 'egg2':

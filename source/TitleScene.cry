@@ -9,7 +9,7 @@ class TitleScene : AbstractScene {
 		
 		for (event : events) {
 			if (event.key == 'space') {
-				this.next = new FadeScene(this, new PlayScene('tutorial'));
+				this.next = new FadeScene(this, new PlayScene(get_next_level(null)));
 			}
 		}
 	}

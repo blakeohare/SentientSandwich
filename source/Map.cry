@@ -7,6 +7,8 @@ TILE_ID_TO_SPRITE_TYPE = {
 	'f': 'egg3', // hopping egg
 	'F': 'fly',
 	'B': 'broccoli',
+	'H': 'cheese',
+	'R': 'roach1',
 	'A': 'antibiotics',
 	'M': 'mayo',
 	
@@ -45,6 +47,8 @@ class Map {
 					case 'A':
 					case 'M':
 					case 'F':
+					case 'H':
+					case 'R':
 					case '1':
 					case '2':
 					case '3':

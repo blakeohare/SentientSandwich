@@ -23,7 +23,13 @@ class PlayScene : AbstractScene {
 		this.player.height = .75 + .24 * this.object_count;
 		
 		if (this.player.ground == this.map.goal_tile) {
-			this.next = new FadeScene(this, new PlayScene('level1'));
+			next_level = get_next_level(this.id);
+			if (next_level == null) {
+				next_scene = new TitleScene();
+			} else {
+				next_scene = new PlayScene(get_next_level(this.id));
+			}
+			this.next = new FadeScene(this, next_scene);
 		}
 		
 		for (event : events) {
