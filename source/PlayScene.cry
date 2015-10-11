@@ -6,6 +6,7 @@ class PlayScene : AbstractScene {
 	constructor(id) : base() {
 		this.id = id;
 		this.map = new Map(id);
+		this.map.scene = this;
 		this.player = null;
 		this.sprites = [];
 		for (sprite_data : this.map.sprites) {
@@ -17,11 +18,15 @@ class PlayScene : AbstractScene {
 				this.player = sprite;
 			}
 			this.sprites.add(sprite);
+			sprite.map = this.map;
+			sprite.scene = this;
 		}
 		this.player.inhaling = false;
 		this.object_count = 0;
 		
-		if (this.id == 'win') {
+		if (this.id == 'win' ||
+			this.id == 'level2') {
+			
 			this.object_count = 4;
 		}
 		
@@ -90,6 +95,7 @@ class PlayScene : AbstractScene {
 		grid = this.map.grid;
 		
 		for (sprite : this.sprites) {
+			sprite.map = this.map;
 			if (!sprite.immune) {
 				sprite.ghost = false;
 			}
