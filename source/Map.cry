@@ -2,6 +2,10 @@ TILE_ID_TO_SPRITE_TYPE = {
 	'o': 'olive',
 	'@': 'player',
 	'C': 'soda',
+	'E': 'egg1', // brown egg
+	'e': 'egg2', // white egg
+	'f': 'egg3', // hopping egg
+	
 };
 
 class Map {
@@ -22,6 +26,9 @@ class Map {
 					case '@':
 					case 'o':
 					case 'C':
+					case 'f':
+					case 'E':
+					case 'e':
 						this.sprites.add([TILE_ID_TO_SPRITE_TYPE[id], x, y]);
 						if (id == 'o') {
 							id = 'b';

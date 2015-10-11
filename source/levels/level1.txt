@@ -2,13 +2,13 @@ xxxxxxxxxxxxxxxx
 x              x
 x              x
 x              x
+x C C C C      x
+xxxxxxxxxxxx   x
 x              x
 x              x
 x              x
 x              x
-x              x
-x              x
-x       C   C  x
+x      e E e f x
 x     xxxxxxxxxx
 x              x
 x              x

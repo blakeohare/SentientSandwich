@@ -6,7 +6,10 @@ PLAYER_IMAGE_BY_SCALE = {};
 SPRITE_HEIGHTS = {
 	'player': .75,
 	'olive': 1.25,
-	'soda': 2.3,
+	'soda': 4,
+	'egg1': 2.3,
+	'egg2': 2.3,
+	'egg3': 2.3,
 };
 
 class Sprite {
@@ -177,9 +180,18 @@ class Sprite {
 			switch (this.type) {
 				case 'olive':
 				case 'soda':
+				case 'egg1':
+				case 'egg2':
+				case 'egg3':
+					if (this.type == 'egg3') {
+						yo = $sin(rc * 2 * 3.14159 / FPS / 2) - .7;
+						if (yo < 0) yo = 0;
+						y -= $floor(yo * 50);
+					}
 					path = 'sprites/' + this.type + '/stand.png';
 					img = IMAGES.get_at_height(path, this.pixel_height);
 					$gfx_blit_image(img, x - img.width / 2, y - img.height);
+					
 					break;
 				default:
 					$assert(false, "No rendering defined for sprite type: " + this.type);
