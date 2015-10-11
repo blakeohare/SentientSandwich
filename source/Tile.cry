@@ -14,6 +14,7 @@ TILE_DATA = {
 	'R': ['tupperware-right', null, true],
 	'T': ['tupperware-lid', null, true],
 	
+	'I': ['discoballtemp', 3, false],
 	'Q': ['exit-sign', 3, false],
 	'[': ['exit-w', null, false],
 	']': ['exit-e', null, false],

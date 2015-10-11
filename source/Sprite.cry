@@ -14,6 +14,7 @@ SPRITE_HEIGHTS = {
 	'egg3': 2.3,
 	'fly': 0.667,
 	'cheese': 2,
+	'banner': 2,
 	'roach1': 1.4,
 	'broccoli': 2.1,
 	'explain1': 2,

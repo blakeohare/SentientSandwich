@@ -80,14 +80,16 @@ class Map {
 			}
 		}
 		this.grid = grid;
-		
-		x = this.exit_coords[0];
-		y = this.exit_coords[1];
-		while (true) {
-			if (grid[x][++y].blocking) {
-				this.goal_tile = grid[x][y]; // when the player has this as their ground tile, then that indicates the level has been won.
-				
-				break;
+		this.goal_tile = grid[0][0];
+		if (this.exit_coords != null) {
+			x = this.exit_coords[0];
+			y = this.exit_coords[1];
+			while (true) {
+				if (grid[x][++y].blocking) {
+					this.goal_tile = grid[x][y]; // when the player has this as their ground tile, then that indicates the level has been won.
+					
+					break;
+				}
 			}
 		}
 	}
