@@ -13,6 +13,8 @@ SPRITE_HEIGHTS = {
 	'egg2': 2.3,
 	'egg3': 2.3,
 	'fly': 0.667,
+	'dancer1': 2.4,
+	'dancer2': 2.4,
 	'cheese': 2,
 	'banner': 2,
 	'roach1': 1.4,
@@ -37,6 +39,8 @@ for (i = 1; i < 100; ++i) {
 }
 IS_SIGN['strobe'] = true;
 IS_SIGN['roach2'] = true;
+IS_SIGN['dancer1'] = true;
+IS_SIGN['dancer2'] = true;
 
 CANT_EAT = {
 	'antibiotics': true,
@@ -83,6 +87,7 @@ class Sprite {
 		this.state_counter = $floor($random() * FPS * 2);
 		this.roach_left = $random() < .5;
 		this.wait_expire = $floor($random() * FPS * 2);
+		this.rand = $floor($random() * FPS);
 	}
 	
 	function update(scene, grid) {
@@ -294,6 +299,22 @@ class Sprite {
 			y = $floor(this.y * 40 - offset_y);
 			
 			switch (this.type) {
+				case 'dancer1':
+				case 'dancer2':
+					alt = this.type == 'dancer1'
+						? 'sprites/player/kick.png'
+						: 'sprites/player/crouch.png';
+					r = rc + this.rand;
+					path = (r % 30 < 10) 
+						? 'sprites/player/stand.png'
+						: alt;
+					if ((r % FPS) == 20) {
+						this.facing_right = !this.facing_right;
+						//this.dx = this.facing_right ? -.001 : .001;
+					}
+					img = IMAGES.get_scaled(path, .3, this.facing_right);
+					$gfx_blit_image(img, x - img.width / 2, y - img.height);
+					break;
 				case 'fly':
 					path = 'sprites/fly/fly' + ((rc / 3) % 2 + 1) + '.png';
 					img = IMAGES.get_at_height(path, this.pixel_height);
