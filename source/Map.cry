@@ -92,5 +92,9 @@ class Map {
 				}
 			}
 		}
+		
+		if (path == 'win') {
+			this.sprites.add(['strobe', 10.5, 5]);
+		}
 	}
 }

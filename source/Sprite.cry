@@ -27,12 +27,14 @@ SPRITE_HEIGHTS = {
 	'explain8': 2,
 	'explain9': 2,
 	'explain0': 2,
+	'strobe': 6,
 };
 
 IS_SIGN = {};
 for (i = 1; i < 100; ++i) {
 	IS_SIGN['explain' + i] = true;
 }
+IS_SIGN['strobe'] = true;
 
 CANT_EAT = {
 	'antibiotics': true,
@@ -245,6 +247,11 @@ class Sprite {
 					break;
 				case 'mayo':
 					path = 'sprites/mayo/stand' + ((rc / 5) % 2 + 1) + '.png';
+					img = IMAGES.get_at_height(path, this.pixel_height);
+					$gfx_blit_image(img, x - img.width / 2, y - img.height);
+					break;
+				case 'strobe':
+					path = 'sprites/strobe/strobe' + ((rc / 2) % 4 + 1) + '.png';
 					img = IMAGES.get_at_height(path, this.pixel_height);
 					$gfx_blit_image(img, x - img.width / 2, y - img.height);
 					break;

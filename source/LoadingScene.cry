@@ -19,6 +19,10 @@ class LoadingScene : AbstractScene {
 			
 			case LoadingScenePhase.PRE_LOAD:
 				$gfx_image_sheet_load('all');
+				$gfx_image_load_from_resource('s1', 'image_bug_workaround/strobe1.png');
+				$gfx_image_load_from_resource('s2', 'image_bug_workaround/strobe2.png');
+				$gfx_image_load_from_resource('s3', 'image_bug_workaround/strobe3.png');
+				$gfx_image_load_from_resource('s4', 'image_bug_workaround/strobe4.png');
 				this.phase = LoadingScenePhase.LOADING;
 				break;
 			

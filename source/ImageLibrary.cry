@@ -55,9 +55,15 @@ class ImageLibrary {
 				img = $gfx_flip_image(img, true, false);
 				this.flipped[path] = img;
 			} else {
-				rpath = 'images/' + path;
-				$gfx_image_load_from_resource('t', rpath);
-				img = $gfx_image_get('t');
+				if (path.startsWith('sprites/strobe')) {
+					k = path.split('/')[-1]['strobe'.length:].split('.')[0];
+					img = $gfx_image_get('s' + k);
+				} else {
+					rpath = 'images/' + path;
+					$gfx_image_load_from_resource('t', rpath);
+					img = $gfx_image_get('t');
+				}
+				
 				this.images[path] = img;
 			}
 		}

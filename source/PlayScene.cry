@@ -20,6 +20,10 @@ class PlayScene : AbstractScene {
 		}
 		this.player.inhaling = false;
 		this.object_count = 0;
+		
+		if (this.id == 'win') {
+			this.object_count = 4;
+		}
 	}
 	
 	function update(events, pressed_keys) {
@@ -39,6 +43,7 @@ class PlayScene : AbstractScene {
 		for (event : events) {
 			switch (event.key) {
 				case 'space':
+				case 'up':
 					if (event.down) {
 						if (this.player.ground != null) {
 							this.player.ground = null;
