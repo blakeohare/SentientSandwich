@@ -1,30 +1,95 @@
+enum TitlePhase {
+	WAIT = 1,
+	INHALE = 2,
+	CHEW = 3,
+}
+
 class TitleScene : AbstractScene {
 	constructor() : base() {
 		this.next = null;
 		this.counter = 0;
+		this.phase = TitlePhase.WAIT;
+		this.spacebar = [63, 166];
+		this.mouth = [280, 241];
 	}
 	
 	function update(events, pressed_keys) {
-		this.counter++;
 		
+		this.counter++;
+		space_pressed = false;
 		for (event : events) {
-			if (event.key == 'space') {
-				this.next = new FadeScene(this, new PlayScene(get_next_level(null)));
+			if (event.key == 'space' && event.down) {
+				space_pressed = true;
 			}
+		}
+		
+		switch (this.phase) {
+			case TitlePhase.WAIT:
+				if (space_pressed) {
+					this.counter = 0;
+					this.phase = TitlePhase.INHALE;
+				}
+				break;
+			case TitlePhase.INHALE:
+				mx = this.mouth[0];
+				my = this.mouth[1];
+				sx = this.spacebar[0];
+				sy = this.spacebar[1];
+				dx = mx - sx;
+				dy = my - sy;
+				dist = (dx ** 2 + dy ** 2) ** .5;
+				v = 10;
+				dx = v * dx / dist;
+				dy = v * dy / dist;
+				if (dist <= v) {
+					this.phase = TitlePhase.CHEW;
+				}
+				
+				this.spacebar[0] = sx + dx;
+				this.spacebar[1] = sy + dy;
+				break;
+			case TitlePhase.CHEW:
+				if (this.counter == FPS * 2) {
+					this.next = new FadeScene(this, new PlayScene(get_next_level(null)));
+				}
+				break;
+			default: break;
 		}
 	}
 	
 	function render(rc) {
 		title = IMAGES.get('title.png');
 		$gfx_blit_image(title, 0, 0);
+		mouthx = this.mouth[0];
+		mouthy = this.mouth[1];
+		spacex = this.spacebar[0];
+		spacey = this.spacebar[1];
+		show_text = true;
+		switch (this.phase) {
+			case TitlePhase.WAIT:
+				path = 'mouth1.png';
+				show_text = (rc / 10) % 2 == 1;
+				break;
+			case TitlePhase.INHALE:
+				path = 'mouth1.png';
+				break;
+			case TitlePhase.CHEW:
+				show_text = false;
+				path = ((rc / 8) % 2) == 1
+					? 'mouth2.png'
+					: 'mouth3.png';
+					
+				break;
+			default:
+				break;
+		}
 		
-		left = 13;
-		top = 166;
-		width = 150;
-		height = 100;
+		img = IMAGES.get(path);
+		$gfx_blit_image(img, mouthx - img.width / 2, mouthy - img.height / 2);
 		
-		if ((rc / 8) % 2 == 0) {
-			$gfx_draw_rectangle(left, top, width, height, 34, 177, 78, 255);
+		if (show_text) {
+			img = IMAGES.get('spacebar.png');
+			$gfx_blit_image(img, $floor(spacex - img.width / 2), $floor(spacey - img.height / 2));
 		}
 	}
 }
