@@ -8,7 +8,7 @@ TILE_ID_TO_SPRITE_TYPE = {
 	'F': 'fly',
 	'B': 'broccoli',
 	'H': 'cheese',
-	'R': 'roach1',
+	'r': 'roach1',
 	'A': 'antibiotics',
 	'M': 'mayo',
 	
@@ -48,7 +48,7 @@ class Map {
 					case 'M':
 					case 'F':
 					case 'H':
-					case 'R':
+					case 'r':
 					case '1':
 					case '2':
 					case '3':
