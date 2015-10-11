@@ -21,7 +21,11 @@ class Map {
 					case '@':
 					case 'o':
 						this.sprites.add([TILE_ID_TO_SPRITE_TYPE[id], x, y]);
-						id = ' ';
+						if (id == 'o') {
+							id = 'b';
+						} else {
+							id = ' ';
+						}
 						break;
 					default:
 						break;

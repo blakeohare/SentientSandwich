@@ -6,6 +6,9 @@ TILE_DATA = {
 		]
 	*/
 	'x': ['block', null, true],
+	'\\': ['bowl-left', null, true],
+	'/': ['bowl-right', null, true],
+	'b': ['bowl', null, false],
 	' ': ['background', null, false],
 };
 

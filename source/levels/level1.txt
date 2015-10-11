@@ -11,6 +11,6 @@ x    xxxxxxxxxxx
 x              x
 x              x
 x              x
-x    oo        x
-x   oooo       x
+x  \oooo/      x
+x   \oo/       x
 xxxxxxxxxxxxxxxx
