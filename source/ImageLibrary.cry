@@ -1,15 +1,17 @@
+import Graphics;
+import Math;
+
 class ImageLibrary {
-	constructor() {
-		this.images = {};
-		this.flipped = {};
-		this.by_scale = {};
-		this.flipped_by_scale = {};
-		this.at_height = {};
-	}
+	static field images = {};
+	static field flipped = {};
+	static field by_scale = {};
+	static field flipped_by_scale = {};
+	static field at_height = {};
+	static field imageSheet = null;
 	
-	function get_scaled(path, scale, flipped = false) {
-		scaleint = $floor(scale * 100);
-		lookup = flipped ? this.flipped_by_scale : this.by_scale;
+	static function get_scaled(path, scale, flipped = false) {
+		scaleint = Math.floor(scale * 100);
+		lookup = flipped ? ImageLibrary.flipped_by_scale : ImageLibrary.by_scale;
 		images = lookup.get(scaleint, null);
 		if (images == null) {
 			images = {};
@@ -18,26 +20,26 @@ class ImageLibrary {
 		
 		img = images.get(path, null);
 		if (img == null) {
-			img = this.get(path, flipped);
-			img = $gfx_image_scale(img, $floor(img.width * scale), $floor(img.height * scale));
+			img = ImageLibrary.get(path, flipped);
+			img = img.scale(Math.floor(img.width * scale), Math.floor(img.height * scale));
 			images[path] = img;
 		}
 		return img;
 	}
 	
-	function get_at_height(path, height) {
-		lookup = this.at_height.get(height, null);
+	static function get_at_height(path, height) {
+		lookup = ImageLibrary.at_height.get(height, null);
 		if (lookup == null) {
 			lookup = {};
-			this.at_height[height] = lookup;
+			ImageLibrary.at_height[height] = lookup;
 		}
 		
 		img = lookup.get(path, null);
 		if (img == null) {
-			img = this.get(path, false);
+			img = ImageLibrary.get(path, false);
 			if (img.height != height) {
 				r = 1.0 * height / img.height;
-				img = $gfx_image_scale(img, $floor(r * img.width), $floor(r * img.height));
+				img = img.scale(Math.floor(r * img.width), Math.floor(r * img.height));
 			}
 			lookup[path] = img;
 		}
@@ -45,31 +47,23 @@ class ImageLibrary {
 		return img;
 	}
 	
-	function get(path, flipped = false) {
+	static function get(path, flipped = false) {
 		
-		lookup = flipped ? this.flipped : this.images;
+		lookup = flipped ? ImageLibrary.flipped : ImageLibrary.images;
 		img = lookup.get(path, null);
 		if (img == null) {
 			if (flipped) {
-				img = this.get(path, false);
-				img = $gfx_flip_image(img, true, false);
-				this.flipped[path] = img;
+				img = ImageLibrary.get(path, false);
+				img = img.flip(true, false);
+				ImageLibrary.flipped[path] = img;
 			} else {
-				if (path.startsWith('sprites/strobe')) {
-					k = path.split('/')[-1]['strobe'.length:].split('.')[0];
-					img = $gfx_image_get('s' + k);
-				} else {
-					rpath = 'images/' + path;
-					$gfx_image_load_from_resource('t', rpath);
-					img = $gfx_image_get('t');
-				}
-				
-				this.images[path] = img;
+				rpath = 'images/' + path;
+				rawImg = ImageLibrary.imageSheet.getImage(rpath);
+				img = Graphics.GraphicsTexture.createImage(rawImg);
+				ImageLibrary.images[path] = img;
 			}
 		}
 
 		return img;
 	}
 }
-
-IMAGES = new ImageLibrary();

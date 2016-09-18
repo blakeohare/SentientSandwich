@@ -1,42 +1,50 @@
-TILE_DATA = {
-	/* tile key: [
-		ID name,
-		nullable int of image count,
-		is blocking
-		]
-	*/
-	'x': ['block', null, true],
-	'\\': ['bowl-left', null, true],
-	'/': ['bowl-right', null, true],
-	'b': ['bowl', null, false],
-	' ': ['background', null, false],
-	'L': ['tupperware-left', null, true],
-	'R': ['tupperware-right', null, true],
-	'T': ['tupperware-lid', null, true],
-	
-	'I': ['discoballtemp', 3, false],
-	'Q': ['exit-sign', 3, false],
-	'[': ['exit-w', null, false],
-	']': ['exit-e', null, false],
-	'{': ['exit-nw', null, false],
-	'}': ['exit-ne', null, false],
-	'-': ['exit-n', null, false],
-	'#': ['exit-m', null, false],
-};
 
 class TileTemplate {
+	static field TILE_DATA = {
+		/* tile key: [
+			ID name,
+			nullable int of image count,
+			is blocking
+			]
+		*/
+		'x': ['block', null, true],
+		'\\': ['bowl-left', null, true],
+		'/': ['bowl-right', null, true],
+		'b': ['bowl', null, false],
+		' ': ['background', null, false],
+		'L': ['tupperware-left', null, true],
+		'R': ['tupperware-right', null, true],
+		'T': ['tupperware-lid', null, true],
+		
+		'I': ['discoballtemp', 3, false],
+		'Q': ['exit-sign', 3, false],
+		'[': ['exit-w', null, false],
+		']': ['exit-e', null, false],
+		'{': ['exit-nw', null, false],
+		'}': ['exit-ne', null, false],
+		'-': ['exit-n', null, false],
+		'#': ['exit-m', null, false],
+	};
+
+	field id;
+	field blocking;
+	field images;
+	field last_valid;
+	field latest_image;
+	field images_length;
+	
 	constructor(key) {
-		data = TILE_DATA[key];
+		data = TileTemplate.TILE_DATA[key];
 		this.id = data[0];
 		frames = data[1];
 		this.blocking = data[2];
 		if (frames == null) {
-			this.images = [IMAGES.get('tiles/' + this.id + '.png')];
+			this.images = [ImageLibrary.get('tiles/' + this.id + '.png')];
 		} else {
 			this.images = [];
 			for (i = 1; i <= frames; ++i) {
 				// 4 images per frame. Could divide render counter by 4, or just do this and drop a VM cycle.
-				this.images.concat([IMAGES.get('tiles/' + this.id + i + '.png')] * 4);
+				this.images.concat([ImageLibrary.get('tiles/' + this.id + i + '.png')] * 4);
 			}
 		}
 		this.last_valid = -1;
@@ -52,15 +60,21 @@ class TileTemplate {
 	}
 }
 
-TILE_STORE = {};
-
 class Tile {
+	static field TILE_STORE = {};
+	
+	field id;
+	field template;
+	field x;
+	field y;
+	field blocking;
+	
 	constructor(id, x, y) {
 		this.id = id;
-		this.template = TILE_STORE.get(id, null);
+		this.template = Tile.TILE_STORE.get(id, null);
 		if (this.template == null) {
 			this.template = new TileTemplate(id);
-			TILE_STORE[id] = this.template;
+			Tile.TILE_STORE[id] = this.template;
 		}
 		this.x = x;
 		this.y = y;
