@@ -1,10 +1,17 @@
+import Graphics2D;
+import Math;
+
 class FadeScene : AbstractScene {
+	field counter = 0;
+	field prev_scene;
+	field next_scene;
+	field bg;
+	field opacity = 0;
+	
 	constructor(prev_scene, next_scene) : base() {
-		this.counter = 0;
 		this.prev_scene = prev_scene;
 		this.next_scene = next_scene;
 		this.bg = prev_scene;
-		this.opacity = 0;
 	}
 	
 	function update(events, pressed_keys) {
@@ -31,6 +38,8 @@ class FadeScene : AbstractScene {
 	
 	function render(rc) {
 		this.bg.render(rc);
-		$gfx_draw_rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT, 0, 0, 0, $floor(255 * this.opacity));
+		Graphics2D.Draw.rectangle(
+			0, 0, GAME_WIDTH, GAME_HEIGHT, 
+			0, 0, 0, Math.floor(255 * this.opacity));
 	}
 }

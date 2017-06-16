@@ -1,35 +1,45 @@
-TILE_ID_TO_SPRITE_TYPE = {
-	'o': 'olive',
-	'@': 'player',
-	'C': 'soda',
-	'E': 'egg1', // brown egg
-	'e': 'egg2', // white egg
-	'f': 'egg3', // hopping egg
-	'F': 'fly',
-	'B': 'broccoli',
-	'H': 'cheese',
-	'r': 'roach1',
-	'A': 'antibiotics',
-	'M': 'mayo',
-	'j': 'dancer1',
-	'J': 'dancer2',
-	
-	'1': 'explain1',
-	'2': 'explain2',
-	'3': 'explain3',
-	'4': 'explain4',
-	'5': 'explain5',
-	'6': 'explain6',
-	'7': 'explain7',
-	'8': 'explain8',
-	'9': 'explain9',
-	'0': 'explain0',
-	
-};
+import Resources;
 
 class Map {
+
+	static field TILE_ID_TO_SPRITE_TYPE = {
+		'o': 'olive',
+		'@': 'player',
+		'C': 'soda',
+		'E': 'egg1', // brown egg
+		'e': 'egg2', // white egg
+		'f': 'egg3', // hopping egg
+		'F': 'fly',
+		'B': 'broccoli',
+		'H': 'cheese',
+		'r': 'roach1',
+		'A': 'antibiotics',
+		'M': 'mayo',
+		'j': 'dancer1',
+		'J': 'dancer2',
+		
+		'1': 'explain1',
+		'2': 'explain2',
+		'3': 'explain3',
+		'4': 'explain4',
+		'5': 'explain5',
+		'6': 'explain6',
+		'7': 'explain7',
+		'8': 'explain8',
+		'9': 'explain9',
+		'0': 'explain0',
+	};
+
+	field width;
+	field height;
+	field sprites;
+	field exit_coords;
+	field grid;
+	field goal_tile;
+	field scene;
+	
 	constructor(path) {
-		contents = $resource_read_text('levels/' + path + '.txt');
+		contents = Resources.readText('levels/' + path + '.txt');
 		rows = contents.replace('\r\n', '\n').replace('\r', '\n').split('\n');
 		height = rows.length;
 		width = rows[0].length;
@@ -67,7 +77,7 @@ class Map {
 					case '8':
 					case '9':
 					case '0':
-						this.sprites.add([TILE_ID_TO_SPRITE_TYPE[id], x, y]);
+						this.sprites.add([Map.TILE_ID_TO_SPRITE_TYPE[id], x, y]);
 						if (id == 'o') {
 							id = 'b';
 						} else {

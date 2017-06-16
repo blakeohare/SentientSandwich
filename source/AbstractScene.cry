@@ -1,13 +1,12 @@
 class AbstractScene {
-	constructor() {
-		this.next = null;
-	}
+	field next = null;
+	constructor() { }
 	
 	function update(events, pressed_keys) {
-		$assert(false, "Override me!");
+		throw new NotImplementedException("Override me!");
 	}
 	
 	function render(render_counter) {
-		$assert(false, "Override me!");
+		throw new NotImplementedException("Override me!");
 	}
 }

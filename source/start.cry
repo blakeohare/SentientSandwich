@@ -1,44 +1,32 @@
-FPS = 30;
-GAME_WIDTH = 640;
-GAME_HEIGHT = 480;
+import Game;
+import ImageResources;
 
-EPSILON = 0.00001;
+const FPS = 30;
+const GAME_WIDTH = 640;
+const GAME_HEIGHT = 480;
 
-import 'AbstractScene.cry';
-
-import 'FadeScene.cry';
-import 'ImageLibrary.cry';
-import 'LevelOrder.cry';
-import 'LoadingScene.cry';
-import 'Map.cry';
-import 'PlayScene.cry';
-import 'Sprite.cry';
-import 'Tile.cry';
-import 'TitleScene.cry';
-import 'Util.cry';
-
+const EPSILON = 0.00001;
 
 function main() {
-	$game_initialize(FPS);
 	
-	$game_initialize_screen(GAME_WIDTH, GAME_HEIGHT);
+	ImageLibrary.imageSheet = ImageResources.ImageSheet.loadFromResources('all');
 	
-	$game_set_title('Sentient Sandwich');
+	window = new GameWindow("Sentient Sandwich", FPS, GAME_WIDTH, GAME_HEIGHT);
 	
 	pressed_keys = {};
 	events = [];
 	
-	active_scene = new LoadingScene();
+	active_scene = new TitleScene();
 	counter = 0;
 	
 	while (true) {
 		
 		events.clear();
-		for (ev : $game_pump_events()) {
-			if (ev.is_quit) return;
+		for (ev : window.pumpEvents()) {
+			if (ev.type == EventType.QUIT) return;
 			
-			if (ev.is_key) {
-				pressed_keys[ev.key] = ev.down;
+			if (ev.type == EventType.KEY_DOWN || ev.type == EventType.KEY_UP) {
+				pressed_keys[ev.key] = ev.type == EventType.KEY_DOWN;
 				events.add(ev);
 			}
 		}
@@ -54,8 +42,6 @@ function main() {
 		
 		counter++;
 		
-		$game_clock_tick();
+		window.clockTick();
 	}
 }
-
-main();

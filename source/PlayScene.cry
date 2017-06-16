@@ -1,8 +1,16 @@
-SIZE_CHECK = {
-	'soda': 10
-};
+import Math;
 
 class PlayScene : AbstractScene {
+	static field SIZE_CHECK = {
+		'soda': 10
+	};
+	
+	field id;
+	field map;
+	field player;
+	field sprites;
+	field object_count;
+	
 	constructor(id) : base() {
 		this.id = id;
 		this.map = new Map(id);
@@ -60,8 +68,8 @@ class PlayScene : AbstractScene {
 		
 		for (event : events) {
 			switch (event.key) {
-				case 'space':
-				case 'up':
+				case KeyboardKey.SPACE:
+				case KeyboardKey.UP:
 					if (event.down) {
 						if (this.player.ground != null) {
 							this.player.ground = null;
@@ -74,7 +82,7 @@ class PlayScene : AbstractScene {
 					}
 					break;
 				
-				case 'r':
+				case KeyboardKey.R:
 					if (event.down) {
 						this.next = new FadeScene(this, new PlayScene(this.id));
 					}
@@ -85,20 +93,18 @@ class PlayScene : AbstractScene {
 		}
 		
 		
-		this.player.inhaling = pressed_keys.get('z', false);
+		this.player.inhaling = pressed_keys.get(KeyboardKey.Z, false);
 		v = .2;
 		if (this.player.inhaling) {
 			v = 0;
 		}
-		if (pressed_keys.get('left', false)) {
+		if (pressed_keys.get(KeyboardKey.LEFT, false)) {
 			this.player.dx = -v;
 			this.player.facing_right = false;
-		} else if (pressed_keys.get('right', false)) {
+		} else if (pressed_keys.get(KeyboardKey.RIGHT, false)) {
 			this.player.dx = v;
 			this.player.facing_right = true;
 		}
-	
-		
 		
 		grid = this.map.grid;
 		
@@ -117,17 +123,17 @@ class PlayScene : AbstractScene {
 			right = this.player.facing_right;
 			for (sprite : this.sprites) {
 				if (sprite != this.player && !sprite.immune) {
-					size_check = SIZE_CHECK.get(sprite.type, null);
+					size_check = PlayScene.SIZE_CHECK.get(sprite.type, null);
 					size_check = size_check == null || size_check <= this.object_count;
 					if (size_check) {
-						dy = $abs(player_y - (sprite.y - sprite.height / 2));
+						dy = Math.abs(player_y - (sprite.y - sprite.height / 2));
 						dx = player_x - sprite.x;
 						dist = (dx ** 2 + dy ** 2) ** .5;
 						if (dist < INHALE_DISTANCE) {
 							if (dist < .3) {
 								sprite.dead = true;
 								this.object_count++;
-								if (CANT_EAT.get(sprite.type, false)) {
+								if (Sprite.CANT_EAT.get(sprite.type, false)) {
 									this.player.death_counter++;
 									this.next = new FadeScene(this, new PlayScene(this.id));
 								}
@@ -175,8 +181,8 @@ class PlayScene : AbstractScene {
 	}
 	
 	function render(rc) {
-		offset_x = $floor(this.player.x * 40) - GAME_WIDTH / 2;
-		offset_y = $floor((this.player.y - this.player.height / 2) * 40) - GAME_HEIGHT / 2;
+		offset_x = Math.floor(this.player.x * 40) - GAME_WIDTH / 2;
+		offset_y = Math.floor((this.player.y - this.player.height / 2) * 40) - GAME_HEIGHT / 2;
 		// TODO: bound the edges so you don't see the void beyond the fridge
 		// TODO: ...unless the width or height is smaller than the screen, in which case center the map.
 		height = this.map.height;
@@ -194,10 +200,10 @@ class PlayScene : AbstractScene {
 		bottom_pixel = bottom * 40 - offset_y;
 		
 		// This is all broken. 
-		crop_left = $floor(-left_pixel / 40) + 1;//- 1;
-		crop_right = $floor((right_pixel - GAME_WIDTH) / 40) - 1;
-		crop_top = $floor(top_pixel / 40) - 1;
-		crop_bottom = $floor((bottom_pixel - GAME_HEIGHT) / 40) - 1;
+		crop_left = Math.floor(-left_pixel / 40) + 1;//- 1;
+		crop_right = Math.floor((right_pixel - GAME_WIDTH) / 40) - 1;
+		crop_top = Math.floor(top_pixel / 40) - 1;
+		crop_bottom = Math.floor((bottom_pixel - GAME_HEIGHT) / 40) - 1;
 		if (crop_left < 0) crop_left = 0;
 		if (crop_right < 0) crop_right = 0;
 		if (crop_top < 0) crop_top = 0;
@@ -223,7 +229,7 @@ class PlayScene : AbstractScene {
 					img = tt.latest_image;
 				}
 				
-				$gfx_blit_image(img, x * 40 - offset_x, y * 40 - offset_y);
+				img.draw(x * 40 - offset_x, y * 40 - offset_y);
 			}
 		}
 		

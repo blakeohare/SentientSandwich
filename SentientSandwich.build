@@ -4,27 +4,29 @@
 	<output>output/%TARGET_NAME%</output>
 	
 	<!-- Sprite sheets -->
-	<spritesheets>
+	<imagesheets>
 		<sheet id="all">
 			<prefix>images/</prefix>
 		</sheet>
-	</spritesheets>
+	</imagesheets>
+	
+	<guidseed>com.noisyprotozoa.demos.sentientsandwich,v0.2.0,%TARGET_NAME%</guidseed>
 	
 	<!-- Targets -->
-	<target name="js_local">
-		<platform>js</platform>
-	</target>
-	
-	<target name="js_remote">
-		<platform>js</platform>
+	<target name="javascript">
+		<platform>javascript-app-gl</platform>
 		<jsfileprefix>/demos/sentientsandwich/</jsfileprefix>
 	</target>
 	
-	<target name="windows">
-		<platform>csopengl</platform>
+	<target name="csharp">
+		<platform>csharp-app</platform>
+	</target>
+	
+	<target name="java">
+		<platform>java-app</platform>
 	</target>
 	
 	<target name="python">
-		<platform>python</platform>
+		<platform>python-app</platform>
 	</target>
 </build>

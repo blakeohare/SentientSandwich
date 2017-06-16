@@ -1,3 +1,6 @@
+import Game;
+import Math;
+
 enum TitlePhase {
 	WAIT = 1,
 	INHALE = 2,
@@ -5,6 +8,11 @@ enum TitlePhase {
 }
 
 class TitleScene : AbstractScene {
+	field counter;
+	field phase;
+	field spacebar;
+	field mouth;
+	
 	constructor() : base() {
 		this.next = null;
 		this.counter = 0;
@@ -18,7 +26,7 @@ class TitleScene : AbstractScene {
 		this.counter++;
 		space_pressed = false;
 		for (event : events) {
-			if (event.key == 'space' && event.down) {
+			if (event.key == KeyboardKey.SPACE && event.down) {
 				space_pressed = true;
 			}
 		}
@@ -58,8 +66,8 @@ class TitleScene : AbstractScene {
 	}
 	
 	function render(rc) {
-		title = IMAGES.get('title.png');
-		$gfx_blit_image(title, 0, 0);
+		title = ImageLibrary.get('title.png');
+		title.draw(0, 0);
 		mouthx = this.mouth[0];
 		mouthy = this.mouth[1];
 		spacex = this.spacebar[0];
@@ -84,12 +92,12 @@ class TitleScene : AbstractScene {
 				break;
 		}
 		
-		img = IMAGES.get(path);
-		$gfx_blit_image(img, mouthx - img.width / 2, mouthy - img.height / 2);
+		img = ImageLibrary.get(path);
+		img.draw(mouthx - img.width / 2, mouthy - img.height / 2);
 		
 		if (show_text) {
-			img = IMAGES.get('spacebar.png');
-			$gfx_blit_image(img, $floor(spacex - img.width / 2), $floor(spacey - img.height / 2));
+			img = ImageLibrary.get('spacebar.png');
+			img.draw(Math.floor(spacex - img.width / 2), Math.floor(spacey - img.height / 2));
 		}
 	}
 }
