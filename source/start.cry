@@ -11,7 +11,7 @@ function main() {
 	
 	ImageLibrary.imageSheet = ImageResources.ImageSheet.loadFromResources('all');
 	
-	window = new Game.GameWindow("Sentient Sandwich", FPS, GAME_WIDTH, GAME_HEIGHT);
+	window = new GameWindow("Sentient Sandwich", FPS, GAME_WIDTH, GAME_HEIGHT);
 	
 	pressed_keys = {};
 	events = [];

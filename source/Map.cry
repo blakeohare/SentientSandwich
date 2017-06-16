@@ -36,6 +36,7 @@ class Map {
 	field exit_coords;
 	field grid;
 	field goal_tile;
+	field scene;
 	
 	constructor(path) {
 		contents = Resources.readText('levels/' + path + '.txt');

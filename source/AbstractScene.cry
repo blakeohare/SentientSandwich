@@ -3,10 +3,10 @@ class AbstractScene {
 	constructor() { }
 	
 	function update(events, pressed_keys) {
-		Core.fail("Override me!");
+		throw new NotImplementedException("Override me!");
 	}
 	
 	function render(render_counter) {
-		Core.fail("Override me!");
+		throw new NotImplementedException("Override me!");
 	}
 }
