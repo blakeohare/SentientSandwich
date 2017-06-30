@@ -18,6 +18,11 @@
 		<jsfileprefix>/demos/sentientsandwich/</jsfileprefix>
 	</target>
 	
+	<target name="games_browser">
+		<platform>javascript-app-gl</platform>
+		<jsfileprefix>/games/sentientsandwich/</jsfileprefix>
+	</target>
+	
 	<target name="csharp">
 		<platform>csharp-app</platform>
 	</target>
