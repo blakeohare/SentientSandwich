@@ -1,5 +1,6 @@
 import Math;
 import Random;
+import TwoCansAlpha3;
 
 const GRAVITY = .1;
 const TERMINAL_VELOCITY = .9;
@@ -170,7 +171,7 @@ class Sprite {
 						this.map.scene.sprites.add(new Sprite('roach2', player.x, player.y + 1));
 						if (player.death_counter == 0) {
 							player.death_counter = 1;
-							scene.next = new FadeScene(scene, new PlayScene(scene.id));
+							scene.switchScene(new FadeTransitionScene(scene, new PlayScene(scene.id)));
 						}
 						return;
 					}

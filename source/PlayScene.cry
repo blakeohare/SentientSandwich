@@ -1,5 +1,5 @@
 import Math;
-import TwoCansAlpha2;
+import TwoCansAlpha3;
 
 class PlayScene : AbstractScene {
 	static field SIZE_CHECK = {
@@ -64,7 +64,7 @@ class PlayScene : AbstractScene {
 			} else {
 				next_scene = new PlayScene(get_next_level(this.id));
 			}
-			this.switchScene(new FadeScene(this, next_scene));
+			this.switchScene(new FadeTransitionScene(this, next_scene));
 		}
 		
 		for (event : events) {
@@ -87,7 +87,7 @@ class PlayScene : AbstractScene {
 					
 					case KeyboardKey.R:
 						if (event.down) {
-							this.switchScene(new FadeScene(this, new PlayScene(this.id)));
+							this.switchScene(new FadeTransitionScene(this, new PlayScene(this.id)));
 						}
 						break;
 					default:
@@ -139,7 +139,7 @@ class PlayScene : AbstractScene {
 								this.object_count++;
 								if (Sprite.CANT_EAT.get(sprite.type, false)) {
 									this.player.death_counter++;
-									this.switchScene(new FadeScene(this, new PlayScene(this.id)));
+									this.switchScene(new FadeTransitionScene(this, new PlayScene(this.id)));
 								}
 							}
 							if (right) {

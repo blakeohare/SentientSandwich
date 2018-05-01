@@ -1,7 +1,7 @@
 ﻿// You do not need to modify this file!
 
-import TwoCansAlpha2;
+import TwoCansAlpha3;
 
 function main(args) {
-	TwoCansAlpha2.startGame();
+	TwoCansAlpha3.startGame();
 }

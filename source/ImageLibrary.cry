@@ -1,6 +1,6 @@
 import Graphics2D;
 import Math;
-import TwoCansAlpha2;
+import TwoCansAlpha3;
 
 // TODO: merge this functionality upstream into the TwoCans SDK Images class
 class ImageLibrary {

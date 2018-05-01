@@ -1,5 +1,5 @@
 import Math;
-import TwoCansAlpha2;
+import TwoCansAlpha3;
 
 enum TitlePhase {
 	WAIT = 1,
@@ -57,7 +57,7 @@ class TitleScene : AbstractScene {
 				break;
 			case TitlePhase.CHEW:
 				if (this.counter == FPS * 2) {
-					this.switchScene(new FadeScene(this, new PlayScene(get_next_level(null))));
+					this.switchScene(new FadeTransitionScene(this, new PlayScene(get_next_level(null))));
 				}
 				break;
 			default: break;
