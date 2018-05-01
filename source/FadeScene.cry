@@ -1,5 +1,6 @@
 import Graphics2D;
 import Math;
+import TwoCansAlpha2;
 
 class FadeScene : AbstractScene {
 	field counter = 0;
@@ -14,10 +15,10 @@ class FadeScene : AbstractScene {
 		this.bg = prev_scene;
 	}
 	
-	function update(events, pressed_keys) {
+	function update(inputManager, events) {
 		this.counter++;
 		if (this.counter >= FPS) {
-			this.next = this.next_scene;
+			this.switchScene(this.next_scene);
 		}
 		
 		halfway = FPS / 2.0;
@@ -36,8 +37,8 @@ class FadeScene : AbstractScene {
 		this.bg = (this.counter < FPS / 2) ? this.prev_scene : this.next_scene;
 	}
 	
-	function render(rc) {
-		this.bg.render(rc);
+	function render() {
+		this.bg.render();
 		Graphics2D.Draw.rectangle(
 			0, 0, GAME_WIDTH, GAME_HEIGHT, 
 			0, 0, 0, Math.floor(255 * this.opacity));

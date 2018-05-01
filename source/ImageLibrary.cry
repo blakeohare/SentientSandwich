@@ -1,6 +1,8 @@
 import Graphics2D;
 import Math;
+import TwoCansAlpha2;
 
+// TODO: merge this functionality upstream into the TwoCans SDK Images class
 class ImageLibrary {
 	static field images = {};
 	static field flipped = {};
@@ -58,8 +60,7 @@ class ImageLibrary {
 				ImageLibrary.flipped[path] = img;
 			} else {
 				rpath = 'images/' + path;
-				rawImg = ImageLibrary.imageSheet.getImage(rpath);
-				img = Graphics2D.GraphicsTexture.load(rawImg);
+				img = Images.get(rpath);
 				ImageLibrary.images[path] = img;
 			}
 		}

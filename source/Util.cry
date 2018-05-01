@@ -5,3 +5,10 @@ function make_grid(width, height) {
 	}
 	return grid;
 }
+
+class RenderCounter {
+	static field counter = 0;
+}
+function get_render_counter() {
+	return RenderCounter.counter++;
+}

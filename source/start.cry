@@ -1,47 +1,5 @@
-import Game;
-import ImageResources;
-
 const FPS = 30;
 const GAME_WIDTH = 640;
 const GAME_HEIGHT = 480;
 
 const EPSILON = 0.00001;
-
-function main() {
-	
-	ImageLibrary.imageSheet = ImageResources.ImageSheet.loadFromResources('all');
-	
-	window = new GameWindow("Sentient Sandwich", FPS, GAME_WIDTH, GAME_HEIGHT);
-	
-	pressed_keys = {};
-	events = [];
-	
-	active_scene = new TitleScene();
-	counter = 0;
-	
-	while (true) {
-		
-		events.clear();
-		for (ev : window.pumpEvents()) {
-			if (ev.type == EventType.QUIT) return;
-			
-			if (ev.type == EventType.KEY_DOWN || ev.type == EventType.KEY_UP) {
-				pressed_keys[ev.key] = ev.type == EventType.KEY_DOWN;
-				events.add(ev);
-			}
-		}
-		
-		active_scene.update(events, pressed_keys);
-		active_scene.render(counter);
-		
-		if (active_scene.next != null) {
-			old = active_scene;
-			active_scene = old.next;
-			old.next = null;
-		}
-		
-		counter++;
-		
-		window.clockTick();
-	}
-}

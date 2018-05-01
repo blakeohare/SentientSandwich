@@ -1,5 +1,6 @@
 import Game;
 import Math;
+import TwoCansAlpha2;
 
 enum TitlePhase {
 	WAIT = 1,
@@ -14,14 +15,13 @@ class TitleScene : AbstractScene {
 	field mouth;
 	
 	constructor() : base() {
-		this.next = null;
 		this.counter = 0;
 		this.phase = TitlePhase.WAIT;
 		this.spacebar = [63, 166];
 		this.mouth = [280, 241];
 	}
 	
-	function update(events, pressed_keys) {
+	function update(inputManager, events) {
 		
 		this.counter++;
 		space_pressed = false;
@@ -58,14 +58,15 @@ class TitleScene : AbstractScene {
 				break;
 			case TitlePhase.CHEW:
 				if (this.counter == FPS * 2) {
-					this.next = new FadeScene(this, new PlayScene(get_next_level(null)));
+					this.switchScene(new FadeScene(this, new PlayScene(get_next_level(null))));
 				}
 				break;
 			default: break;
 		}
 	}
 	
-	function render(rc) {
+	function render() {
+		rc = get_render_counter();
 		title = ImageLibrary.get('title.png');
 		title.draw(0, 0);
 		mouthx = this.mouth[0];
