@@ -112,7 +112,7 @@ class Sprite {
 		this.vy = 0;
 		this.facing_right = true;
 		this.walking = false;
-		this.player_default_height = ImageLibrary.get('sprites/player/stand.png').height;
+		this.player_default_height = Images.get('images/sprites/player/stand.png').height;
 		this.dead = false;
 		this.immune = Sprite.IS_SIGN.get(type, false);
 		this.ghost = this.immune;
@@ -326,7 +326,7 @@ class Sprite {
 			}
 			scale = scale * (.95 ** this.death_counter);
 			if (scale < .1) scale = .1;
-			img = ImageLibrary.get_scaled(path, scale, flipped);
+			img = Images.getAtScale('images/' + path, scale, flipped ? ImageOptions.FLIP_X : ImageOptions.NONE);
 			
 			width = img.width;
 			left = Math.floor(this.x * 40 - width / 2);
@@ -352,22 +352,22 @@ class Sprite {
 						this.facing_right = !this.facing_right;
 						//this.dx = this.facing_right ? -.001 : .001;
 					}
-					img = ImageLibrary.get_scaled(path, .3, this.facing_right);
+					img = Images.getAtScale('images/' + path, .3, this.facing_right ? ImageOptions.FLIP_X : ImageOptions.NONE);
 					img.draw(x - img.width / 2, y - img.height);
 					break;
 				case 'fly':
 					path = 'sprites/fly/fly' + ((rc / 3) % 2 + 1) + '.png';
-					img = ImageLibrary.get_at_height(path, this.pixel_height);
+					img = Images.getWithHeight('images/' + path, this.pixel_height);
 					img.draw(x - img.width / 2, y - img.height);
 					break;
 				case 'mayo':
 					path = 'sprites/mayo/stand' + ((rc / 5) % 2 + 1) + '.png';
-					img = ImageLibrary.get_at_height(path, this.pixel_height);
+					img = Images.getWithHeight('images/' + path, this.pixel_height);
 					img.draw(x - img.width / 2, y - img.height);
 					break;
 				case 'strobe':
 					path = 'sprites/strobe/strobe' + ((rc / 4) % 4 + 1) + '.png';
-					img = ImageLibrary.get_at_height(path, this.pixel_height);
+					img = Images.getWithHeight('images/' + path, this.pixel_height);
 					img.draw(x - img.width / 2, y - img.height);
 					break;
 				case 'roach1':
@@ -377,7 +377,7 @@ class Sprite {
 						path = 'sprites/roach1/stand.png';
 					}
 					scale = 80.0 / 157;
-					img = ImageLibrary.get_scaled(path, scale, this.facing_right);
+					img = Images.getAtScale('images/' + path, scale, this.facing_right ? ImageOptions.FLIP_X : ImageOptions.NONE);
 					img.draw(x - img.width / 2, y - img.height);
 					break;
 				case 'roach2':
@@ -395,7 +395,7 @@ class Sprite {
 						y -= Math.floor(yo * 50);
 					}
 					path = 'sprites/' + this.type + '/stand.png';
-					img = ImageLibrary.get_at_height(path, this.pixel_height);
+					img = Images.getWithHeight('images/' + path, this.pixel_height);
 					img.draw(x - img.width / 2, y - img.height);
 					break;
 				case 'explain1':
@@ -408,12 +408,12 @@ class Sprite {
 				case 'explain8':
 				case 'explain9':
 				case 'explain0':
-					img = ImageLibrary.get_at_height('sprites/explain/' + this.type[7:] + '.png', this.pixel_height);
+					img = Images.getWithHeight('images/sprites/explain/' + this.type[7:] + '.png', this.pixel_height);
 					img.draw(x - img.width / 2, y - img.height);
 					break;
+
 				default:
-					Core.fail("No rendering defined for sprite type: " + this.type);
-					break;
+					throw new Exception("No rendering defined for sprite type: " + this.type);
 			}
 			
 		}

@@ -66,7 +66,7 @@ class TitleScene : AbstractScene {
 	
 	function render() {
 		rc = get_render_counter();
-		title = ImageLibrary.get('title.png');
+		title = Images.get('images/title.png');
 		title.draw(0, 0);
 		mouthx = this.mouth[0];
 		mouthy = this.mouth[1];
@@ -92,11 +92,11 @@ class TitleScene : AbstractScene {
 				break;
 		}
 		
-		img = ImageLibrary.get(path);
+		img = Images.get('images/' + path);
 		img.draw(mouthx - img.width / 2, mouthy - img.height / 2);
 		
 		if (show_text) {
-			img = ImageLibrary.get('spacebar.png');
+			img = Images.get('images/spacebar.png');
 			img.draw(Math.floor(spacex - img.width / 2), Math.floor(spacey - img.height / 2));
 		}
 	}

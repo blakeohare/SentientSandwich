@@ -1,3 +1,4 @@
+import TwoCansAlpha3;
 
 class TileTemplate {
 	static field TILE_DATA = {
@@ -39,12 +40,12 @@ class TileTemplate {
 		frames = data[1];
 		this.blocking = data[2];
 		if (frames == null) {
-			this.images = [ImageLibrary.get('tiles/' + this.id + '.png')];
+			this.images = [Images.get('images/tiles/' + this.id + '.png')];
 		} else {
 			this.images = [];
 			for (i = 1; i <= frames; ++i) {
 				// 4 images per frame. Could divide render counter by 4, or just do this and drop a VM cycle.
-				this.images.concat([ImageLibrary.get('tiles/' + this.id + i + '.png')] * 4);
+				this.images.concat([Images.get('images/tiles/' + this.id + i + '.png')] * 4);
 			}
 		}
 		this.last_valid = -1;
