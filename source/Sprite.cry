@@ -95,6 +95,7 @@ class Sprite {
 	field rand;
 	field map;
 	field inhaling;
+	field scene;
 	
 	constructor(type, x, y) {
 		this.x = x + 0.0;
