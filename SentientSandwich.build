@@ -33,7 +33,8 @@
 		{ "name": "game_title", "value": "Sentient Sandwich" },
 		{ "name": "use_60_fps", "value": false },
 		{ "name": "initial_scene", "value": "TitleScene" },
-		{ "name": "enable_wasd", "value": false }
+		{ "name": "enable_wasd", "value": false },
+		{ "name": "thumbnail", "value": "assets/thumbnail.png" }
 	],
 	
 	"targets": [
