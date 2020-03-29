@@ -1,7 +1,0 @@
-﻿// You do not need to modify this file!
-
-import TwoCansAlpha3;
-
-function main(args) {
-	TwoCansAlpha3.startGame();
-}

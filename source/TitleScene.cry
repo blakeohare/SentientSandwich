@@ -1,5 +1,5 @@
 import Math;
-import TwoCansAlpha3;
+import TwoCansAlpha4;
 
 enum TitlePhase {
 	WAIT = 1,

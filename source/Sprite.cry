@@ -1,6 +1,6 @@
 import Math;
 import Random;
-import TwoCansAlpha3;
+import TwoCansAlpha4;
 
 const GRAVITY = .1;
 const TERMINAL_VELOCITY = .9;

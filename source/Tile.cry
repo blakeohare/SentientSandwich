@@ -1,4 +1,4 @@
-import TwoCansAlpha3;
+import TwoCansAlpha4;
 
 class TileTemplate {
 	static field TILE_DATA = {
